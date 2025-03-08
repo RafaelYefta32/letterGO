@@ -29,14 +29,14 @@ Route::get('/profile', function () {
 
 Route::get('/dashboard', function () {
     return view('mo.dashboard');
-});
+})->name('mo-dashboard');
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
-});
+})->name('mo-dashboard');
 
 Route::get('/kaprodi/dashboard', function () {
     return view('kaprodi.dashboard');
-});
+})->name('mo-dashboard');
 
 require __DIR__.'/auth.php';
