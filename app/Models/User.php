@@ -31,6 +31,7 @@ class User extends Authenticatable
 
     protected $primaryKey = 'nik';
     public $incrementing = false;
+    public $timestamps = false;
 
     /**
      * The attributes that should be hidden for serialization.
