@@ -571,7 +571,7 @@
             </ul>
             <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
                 <li>
-                <a href="#"
+                <a href="{{ route('logout') }}"
                     class="flex items-center p-2 text-base font-medium text-white rounded-lg transition duration-75 hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
                     <svg aria-hidden="true"
                     class="flex-shrink-0 w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"

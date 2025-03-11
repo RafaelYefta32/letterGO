@@ -24,6 +24,7 @@
                     </li>
                     <li class="mb-2"><a href="#" class="p-2 hover:bg-cyan-800 flex items-center">Surat
                             Terbit</a></li>
+                    <li class="mb-2"><a href="{{ route('logout') }}" class="p-2 hover:bg-cyan-800 flex items-center">Logout</a></li>
                 </ul>
             </div>
 

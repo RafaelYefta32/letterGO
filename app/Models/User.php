@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'alamat',
         'semester',
+        'image',
         'id_role',
         'id_jurusan',
     ];

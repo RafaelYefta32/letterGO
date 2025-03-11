@@ -140,11 +140,7 @@
                 </button>
             </div>
             <div class="flex shrink-0 items-center ml-2">
-                <svg class="mx-auto h-8 w-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                    height="24" viewBox="0 0 24 24">
-                    <path fill="#4f46e5"
-                        d="M20 14h-2.722L11 20.278a5.511 5.511 0 0 1-.9.722H20a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1ZM9 3H4a1 1 0 0 0-1 1v13.5a3.5 3.5 0 1 0 7 0V4a1 1 0 0 0-1-1ZM6.5 18.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM19.132 7.9 15.6 4.368a1 1 0 0 0-1.414 0L12 6.55v9.9l7.132-7.132a1 1 0 0 0 0-1.418Z" />
-                </svg>
+                <img class="mx-auto h-12 w-auto" src="{{ asset('img/logoLetter.png') }}" alt="Logo">
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-center ml-5">
                 <div class="hidden sm:ml-6 sm:block">
@@ -183,12 +179,12 @@
                             <span class="sr-only">Open user menu</span>
                             {{-- <img class="size-8 rounded-full" src="{{ asset('profilePicture/' . Auth::user()->Image) }}"
                                 alt=""> --}}
-                            <img class="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt="">
+                            <img class="size-8 rounded-full" src="{{ asset('profilePicture/' . Auth::user()->image) }}" alt="">
+                            
                             <div class="flex flex-col items-start">
-                                <p class="text-sm text-white px-2">Dummy name</p>
+                                <p class="text-sm text-white px-2">{{ Auth::user()->nama }}</p>
                                 {{-- <p class="text-sm text-white px-2">{{ Auth::user()->name }}</p> --}}
-                                <p class="text-xs text-white px-2">User</p>
+                                <p class="text-xs text-white px-2">Mahasiswa</p>
                             </div>
                         </button>
                     </div>
