@@ -11,9 +11,9 @@
             </a> --}}
             <span>
                 <div class="flex items-center justify-center">
-                    <img class="h-16 w-16" src="{{ asset('img/logoLetter.png') }}"
+                    <img class="w-24 h-auto md:w-36 lg:w-32" src="{{ asset('img/logoLetter.png') }}"
                     alt="logo">
-                    <h2 class="ml-3 text-center text-2xl/9 font-bold tracking-tight text-gray-800">LetterGO</h2>
+                    <h2 class="ml-3 text-center text-3xl/9 font-bold tracking-tight text-gray-800">LetterGO</h2>
                 </div>
             </span>
             <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:border-gray-700">

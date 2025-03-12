@@ -140,7 +140,7 @@
                 </button>
             </div>
             <div class="flex shrink-0 items-center ml-2">
-                <img class="mx-auto h-12 w-auto" src="{{ asset('img/logoLetter.png') }}" alt="Logo">
+                <img class="w-16 h-auto md:w-20 lg:w-18" src="{{ asset('img/logoLetter.png') }}" alt="Logo">
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-center ml-5">
                 <div class="hidden sm:ml-6 sm:block">
