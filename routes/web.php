@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 });
+
+// Mahasiswa route
 Route::get('/submit', function () {
     return view('mahasiswa.submit');
 });
@@ -39,16 +41,39 @@ Route::get('/profile', function () {
     return view('mahasiswa.profile');
 });
 
+// MO route
 Route::get('/dashboard', function () { 
     return view('mo.dashboard');
 })->middleware(['auth', 'verified'])->name('mo-dashboard'); 
 
+Route::get('/studentd/crud', function () { 
+    return view('mo.students');
+})->middleware(['auth', 'verified'])->name('mo-students'); 
+
+Route::get('/letter', function () { 
+    return view('mo.letter');
+})->middleware(['auth', 'verified'])->name('mo-letter'); 
+
+// admin route
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('admin-dashboard');
 
+Route::get('/user/crud', function () {
+    return view('admin.user');
+})->middleware(['auth', 'verified'])->name('admin-user-crud');
+
+Route::get('/major', function () {
+    return view('admin.major');
+})->middleware(['auth', 'verified'])->name('admin-major');
+
+// kaprodi route
 Route::get('/kaprodi/dashboard', function () {
     return view('kaprodi.dashboard');
 })->middleware(['auth', 'verified'])->name('kaprodi-dashboard');
+
+Route::get('/kaprodi/pengajuan', function () {
+    return view('kaprodi.pengajuan');
+})->middleware(['auth', 'verified'])->name('kaprodi-pengajuan');
 
 require __DIR__.'/auth.php';
