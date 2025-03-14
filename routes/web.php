@@ -46,13 +46,17 @@ Route::get('/dashboard', function () {
     return view('mo.dashboard');
 })->middleware(['auth', 'verified'])->name('mo-dashboard'); 
 
-Route::get('/studentd/crud', function () { 
+Route::get('/student/crud', function () { 
     return view('mo.students');
 })->middleware(['auth', 'verified'])->name('mo-students'); 
 
 Route::get('/letter', function () { 
     return view('mo.letter');
 })->middleware(['auth', 'verified'])->name('mo-letter'); 
+
+Route::get('/course', function () { 
+    return view('mo.course');
+})->middleware(['auth', 'verified'])->name('mo-course'); 
 
 // admin route
 Route::get('/admin/dashboard', function () {

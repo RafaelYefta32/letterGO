@@ -329,6 +329,19 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('mo-course') }}"
+                            class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
+                            <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="ml-3">Course</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('mo-letter') }}"
                             class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
                             <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
