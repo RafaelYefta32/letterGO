@@ -72,7 +72,8 @@
                                 </button>
                             </div>
                             <!-- Modal body -->
-                            <form action="#">
+                            <form action="{{ route('mo-students-store') }}" method="post">
+                                @csrf
                                 <div class="grid gap-3 mb-4 sm:grid-cols-2">
                                     <div>
                                         <label for="nik"
@@ -108,17 +109,18 @@
                                         <label for="role"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
                                         <input id="role" name="role"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="4" hidden>
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            value="4" hidden>
                                         </input>
                                     </div>
                                     <div>
-                                        <label for="jurusan"
+                                        <label for="id_jurusan"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan</label>
-                                        <select id="jurusan" name="jurusan"
+                                        <select id="id_jurusan" name="id_jurusan"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                            <option value="1">Teknik Informatika</option>
-                                            <option value="2">Sistem Informasi</option>
-                                            <option value="3">Ilmu Komputer</option>
+                                            @foreach ($majors as $major )
+                                            <option value="{{ $major->kode }}">{{ $major->nama }}</option>
+                                        @endforeach
                                         </select>
                                     </div>
                                     <div>
@@ -149,8 +151,10 @@
                                         for="file_input">Upload Profile Picture</label>
                                     <input
                                         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 placeholder-gray-500 focus:outline-none  dark:placeholder-gray-400"
-                                        aria-describedby="file_input_help" id="file_input" type="file" accept=".svg, .png, .jpg, .gif">
-                                    <p class="mt-1 mb-2 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG,
+                                        aria-describedby="file_input_help" id="file_input" type="file"
+                                        accept=".svg, .png, .jpg, .gif">
+                                    <p class="mt-1 mb-2 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
+                                        SVG,
                                         PNG, JPG or GIF (MAX. 800x400px).</p>
                                 </div>
                                 <button type="submit"
@@ -183,41 +187,44 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">2372037
-                                </th>
-                                <td class="px-4 py-3">Rafael Yefta Wijaya</td>
-                                <td class="px-4 py-3">rjoe@email.com</td>
-                                <td class="px-4 py-3">Genap 2024/2025</td>
-                                <td class="px-4 py-3">Teknik Informatika</td>
-                                <td class="px-4 py-3 flex items-center justify-end">
-                                    <button id="apple-imac-27-dropdown-button"
-                                        data-dropdown-toggle="apple-imac-27-dropdown"
-                                        class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                                        type="button">
-                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                        </svg>
-                                    </button>
-                                    <div id="apple-imac-27-dropdown"
-                                        class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                            aria-labelledby="apple-imac-27-dropdown-button">
-                                            <li>
+                            @foreach ($students as $student)
+                                <tr class="border-b dark:border-gray-700  hover:bg-gray-100">
+                                    <th scope="row"
+                                        class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $student->nik }}
+                                    </th>
+                                    <td class="px-4 py-3">{{ $student->nama }}</td>
+                                    <td class="px-4 py-3">{{ $student->email }}</td>
+                                    <td class="px-4 py-3">{{ $student->periode }}</td>
+                                    <td class="px-4 py-3">{{ $student->jurusan->nama }}</td>
+                                    <td class="px-4 py-3 flex items-center justify-end">
+                                        <button id="apple-imac-27-dropdown-button"
+                                            data-dropdown-toggle="apple-imac-27-dropdown"
+                                            class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                            type="button">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                            </svg>
+                                        </button>
+                                        <div id="apple-imac-27-dropdown"
+                                            class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                                aria-labelledby="apple-imac-27-dropdown-button">
+                                                <li>
+                                                    <a href="#"
+                                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                </li>
+                                            </ul>
+                                            <div class="py-1">
                                                 <a href="#"
-                                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                            </li>
-                                        </ul>
-                                        <div class="py-1">
-                                            <a href="#"
-                                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

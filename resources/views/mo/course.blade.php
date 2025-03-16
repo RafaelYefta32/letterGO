@@ -72,7 +72,8 @@
                                 </button>
                             </div>
                             <!-- Modal body -->
-                            <form action="#">
+                            <form action="{{ route('mo-course-store') }}" method="post">
+                                @csrf
                                 <div class="grid gap-3 mb-4 sm:grid-cols-2">
                                     <div>
                                         <label for="kode"
@@ -96,13 +97,14 @@
                                             placeholder="4" required autocomplete="off">
                                     </div>
                                     <div>
-                                        <label for="jurusan"
+                                        <label for="id_jurusan"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan</label>
-                                        <select id="jurusan" name="jurusan"
+                                        <select id="id_jurusan" name="id_jurusan"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                            <option value="1">Teknik Informatika</option>
-                                            <option value="2">Sistem Informasi</option>
-                                            <option value="3">Ilmu Komputer</option>
+                                            @foreach ($majors as $major )
+                                                <option value="{{ $major->kode }}">{{ $major->nama }}</option>
+                                            @endforeach
+                                            
                                         </select>
                                     </div>
                                 </div>
@@ -134,13 +136,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b dark:border-gray-700">
+                            @foreach ($courses as $course ) 
+                            <tr class="border-b dark:border-gray-700 hover:bg-gray-100">
                                 <th scope="row"
-                                    class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">IN240
+                                    class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $course->kode }}
                                 </th>
-                                <td class="px-4 py-3">Pemrograman Web Lanjut</td>
-                                <td class="px-4 py-3">4</td>
-                                <td class="px-4 py-3">Teknik Informatika</td>
+                                <td class="px-4 py-3">{{ $course->nama }}</td>
+                                <td class="px-4 py-3">{{ $course->SKS }}</td>
+                                <td class="px-4 py-3">{{ $course->jurusan->nama }}</td>
                                 <td class="px-4 py-3 flex items-center justify-end">
                                     <button id="apple-imac-27-dropdown-button"
                                         data-dropdown-toggle="apple-imac-27-dropdown"
@@ -168,6 +171,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

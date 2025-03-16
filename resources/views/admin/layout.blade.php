@@ -4,15 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="public/css/style.css">
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
     {{-- <link rel="icon" href="data:image/svg+xml,<svg class='mr-2 h-8 w-auto' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path fill='%234f46e5' d='M20 14h-2.722L11 20.278a5.511 5.511 0 0 1-.9.722H20a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1ZM9 3H4a1 1 0 0 0-1 1v13.5a3.5 3.5 0 1 0 7 0V4a1 1 0 0 0-1-1ZM6.5 18.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM19.132 7.9 15.6 4.368a1 1 0 0 0-1.414 0L12 6.55v9.9l7.132-7.132a1 1 0 0 0 0-1.418Z'/></svg>"> --}}
@@ -23,6 +21,7 @@
     <div class="antialiased bg-gray-50 dark:bg-gray-900">
         <nav
             class="bg-cyan-900 border-b border-gray-200 px-4 py-2.5 dark:bg-cyan-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
+            {{-- <x-notify::notify style="position: fixed; top: 10; left: 0; right: 0; z-index: 9999;" /> --}}
             <div class="flex flex-wrap justify-between items-center">
                 <div class="flex justify-start items-center">
                     <button data-drawer-target="drawer-navigation" data-drawer-toggle="drawer-navigation"
@@ -443,9 +442,9 @@
                     <li>
                         <a href="{{ route('admin-major') }}"
                             class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
-                            <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                fill="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="m6 10.5237-2.27075.6386C3.29797 11.2836 3 11.677 3 12.125V20c0 .5523.44772 1 1 1h2V10.5237Zm12 0 2.2707.6386c.4313.1213.7293.5147.7293.9627V20c0 .5523-.4477 1-1 1h-2V10.5237Z" />
                                 <path fill-rule="evenodd"
@@ -475,15 +474,38 @@
                 </ul>
             </div>
         </aside>
-
         @yield('content')
     </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success', 
+                title: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        </script>
+    @endif
+    @if ($errors->any())
+            <script>
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error', 
+                    title: '{{ $errors->first() }}', 
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+            </script>
+    @endif
 </body>
 
 </html>

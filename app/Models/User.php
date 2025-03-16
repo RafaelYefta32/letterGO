@@ -24,7 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'alamat',
-        'semester',
+        'periode',
         'image',
         'id_role',
         'id_jurusan',
@@ -32,7 +32,6 @@ class User extends Authenticatable
 
     protected $primaryKey = 'nik';
     public $incrementing = false;
-    public $timestamps = false;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -56,4 +55,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function role() {
+        return $this->belongsTo(Role::class, 'id_role');
+    }
+
+    public function jurusan() {
+        return $this->belongsTo(Jurusan::class,'id_jurusan'); 
+    }
+   
 }
