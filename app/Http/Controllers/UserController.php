@@ -23,8 +23,8 @@ class UserController extends Controller
     public function indexMo()
     {
         return view('mo.students')
-        ->with('students',User::where('id_role',4)->get())
-        ->with('majors',Jurusan::all());
+        ->with('students', User::where('id_role', 4)->where('id_jurusan', Auth::user()->id_jurusan)->get());
+
     }
 
     /**
@@ -50,7 +50,7 @@ class UserController extends Controller
                 'id_jurusan' => 'required|string',
                 'password' => 'required|confirmed',
                 'periode' => 'required|string|max:20|',
-                'file_input' => 'nullable|image|mimes:svg,png,jpg,gif|dimensions:max_width=800,max_height=400',
+                'file_input' => 'nullable|image|mimes:svg,png,jpg,gif',
             ])->validate();
 
             $user =  new User($validateData);
@@ -64,23 +64,22 @@ class UserController extends Controller
             return redirect()->route('admin-user-crud');
 
         } elseif (Auth::user()->role->nama == 'Manager Operasional') {
-            
-
             $validateData = validator($request->all(),[
                 'nik' => 'required|string|max:7|unique:user,nik',
                 'nama' => 'required|string|max:100|unique:user,nama',
                 'email' => 'required|email|max:45|unique:user,email',
                 'alamat' => 'required|string|max:45|',
-                'id_jurusan' => 'required|string',
                 'password' => 'required|confirmed',
                 'periode' => 'required|string|max:20|',
-                'file_input' => 'nullable|image|mimes:svg,png,jpg,gif|dimensions:max_width=800,max_height=400',
+                'file_input' => 'sometimes|image|mimes:svg,png,jpg,gif,jpeg',
             ])->validate();
 
             $user =  new User($validateData);
             $user->id_role = 4;
 
             $user->image = $this->uploadImage($validateData);
+
+            $user->id_jurusan = Auth::user()->id_jurusan;
            
             $user->save();
 

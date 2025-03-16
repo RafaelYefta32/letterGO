@@ -80,28 +80,28 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NRP /
                                             NIK</label>
                                         <input type="text" name="nik" id="nik"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="2072020" required autocomplete="off" maxlength="7">
                                     </div>
                                     <div>
                                         <label for="nama"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
                                         <input type="text" name="nama" id="nama"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="John Doe" required autocomplete="off" maxlength="100">
                                     </div>
                                     <div>
                                         <label for="email"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                                         <input type="email" name="email" id="email"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="john.doe@email.com" required autocomplete="off" maxlength="45">
                                     </div>
                                     <div>
                                         <label for="alamat"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
                                         <input type="text" name="alamat" id="alamat"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Jl. Mawar No.999" required autocomplete="off" maxlength="45">
                                     </div>
 
@@ -109,8 +109,8 @@
                                         <label for="id_role"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
                                         <select id="id_role" name="id_role"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                            @foreach ($roles as $role )
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            @foreach ($roles as $role)
                                                 <option value={{ $role->id }}>{{ $role->nama }}</option>
                                             @endforeach
                                         </select>
@@ -119,8 +119,8 @@
                                         <label for="id_jurusan"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan</label>
                                         <select id="id_jurusan" name="id_jurusan"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                            @foreach ($majors as $major )
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            @foreach ($majors as $major)
                                                 <option value="{{ $major->kode }}">{{ $major->nama }}</option>
                                             @endforeach
                                         </select>
@@ -129,7 +129,7 @@
                                         <label for="password"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                         <input type="password" name="password" id="password"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="*****" required autocomplete="off" maxlength="100">
                                     </div>
                                     <div>
@@ -137,24 +137,25 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password
                                             Confirmation</label>
                                         <input type="password" name="password_confirmation" id="password_confirmation"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="*****" required autocomplete="off" maxlength="100">
                                     </div>
                                     <div>
                                         <label for="periode"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Periode</label>
                                         <input type="text" name="periode" id="periode"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Ganjil 2030/2031" required autocomplete="off" maxlength="20">
                                     </div>
                                     <div>
                                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                             for="file_input">Upload file</label>
-                                        <input 
+                                        <input
                                             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none  dark:placeholder-gray-400"
-                                            aria-describedby="file_input_help" id="file_input" name="file_input" type="file">
-                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG,
-                                            PNG, JPG or GIF (MAX. 800x400px).</p>
+                                            aria-describedby="file_input_help" id="file_input" name="file_input"
+                                            type="file" accept=".svg, .png, .jpg, .gif, .jpeg">
+                                        <p class="mt-1 text-sm text-gray-400 dark:text-gray-300" id="file_input_help">SVG,
+                                            PNG, JPG or GIF</p>
                                     </div>
                                 </div>
                                 <button type="submit"
@@ -195,7 +196,11 @@
                                     <td class="px-4 py-3">{{ $user->nama }}</td>
                                     <td class="px-4 py-3">{{ $user->email }}</td>
                                     <td class="px-4 py-3">{{ $user->role->nama }}</td>
-                                    <td class="px-4 py-3">{{ $user->jurusan->nama }}</td>
+                                    @if ($user->id_jurusan == null)
+                                        <td class="px-4 py-3">-</td>
+                                    @else
+                                        <td class="px-4 py-3">{{ $user->jurusan->nama }}</td>
+                                    @endif
                                     <td class="px-4 py-3 flex items-center justify-end">
                                         <button id="apple-imac-27-dropdown-button"
                                             data-dropdown-toggle="apple-imac-27-dropdown"

@@ -72,7 +72,7 @@
                                 </button>
                             </div>
                             <!-- Modal body -->
-                            <form action="{{ route('mo-students-store') }}" method="post">
+                            <form action="{{ route('mo-students-store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="grid gap-3 mb-4 sm:grid-cols-2">
                                     <div>
@@ -113,16 +113,16 @@
                                             value="4" hidden>
                                         </input>
                                     </div>
-                                    <div>
+                                    {{-- <div>
                                         <label for="id_jurusan"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan</label>
                                         <select id="id_jurusan" name="id_jurusan"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                            @foreach ($majors as $major )
+                                            @foreach ($majors as $major)
                                             <option value="{{ $major->kode }}">{{ $major->nama }}</option>
                                         @endforeach
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     <div>
                                         <label for="password"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
@@ -145,17 +145,17 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500  dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Ganjil 2030/2031" required autocomplete="off" maxlength="20">
                                     </div>
-                                </div>
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        for="file_input">Upload Profile Picture</label>
-                                    <input
-                                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 placeholder-gray-500 focus:outline-none  dark:placeholder-gray-400"
-                                        aria-describedby="file_input_help" id="file_input" type="file"
-                                        accept=".svg, .png, .jpg, .gif">
-                                    <p class="mt-1 mb-2 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
-                                        SVG,
-                                        PNG, JPG or GIF (MAX. 800x400px).</p>
+                                    <div>
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                            for="file_input">Upload Profile Picture</label>
+                                        <input
+                                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 placeholder-gray-500 focus:outline-none  dark:placeholder-gray-400"
+                                            aria-describedby="file_input_help" name="file_input" id="file_input" type="file" accept=".svg, .png, .jpg, .gif, .jpeg">
+                                        <p class="mt-1 mb-2 text-sm text-gray-500 dark:text-gray-300"
+                                            id="file_input_help">
+                                            SVG,
+                                            PNG, JPG or GIF</p>
+                                    </div>
                                 </div>
                                 <button type="submit"
                                     class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
