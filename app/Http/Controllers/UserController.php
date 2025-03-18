@@ -83,6 +83,8 @@ class UserController extends Controller
            
             $user->save();
 
+            session()->flash('success', 'Mahasiswa berhasil ditambahkan');
+
             return redirect()->route('mo-students');
         }
            

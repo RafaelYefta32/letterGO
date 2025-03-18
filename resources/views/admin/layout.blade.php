@@ -415,7 +415,7 @@
             <div class="overflow-y-auto py-5 px-3 h-full bg-cyan-900 dark:bg-cyan-800">
                 <ul class="space-y-2">
                     <li>
-                        <a href="#"
+                        <a href="{{ route('admin-dashboard') }}"
                             class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
                             <svg aria-hidden="true"
                                 class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
