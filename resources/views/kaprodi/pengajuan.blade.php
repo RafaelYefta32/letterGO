@@ -1,8 +1,8 @@
-@extends('kaprodi.layout')
+@extends('layouts.layout')
 
 @section('content')
-    <main class="p-2 md:ml-55 h-auto pt-20 w-4/5">
-        <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 mt-5 align-middle justify-center w-full">
+    <main class="p-4 md:ml-64 h-auto pt-20">
+        <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 mt-5">
             <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
                 <!-- Start coding here -->
                 <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
@@ -27,7 +27,7 @@
                                 </div>
                                 <div>
                                     <button type="submit"
-                                        class="py-2 px-4 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-primary-700 border-primary-600 sm:rounded-none sm:rounded-r-lg hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                        class="py-2 px-4 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-cyan-800 border-primary-600 sm:rounded-none sm:rounded-r-lg hover:bg-cyan-700 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                                         autocomplete="off">Search</button>
                                 </div>
                             </form>
@@ -47,94 +47,278 @@
                                 <th scope="col" class="px-4 py-3">Tanggal Pengajuan</th>
                                 <th scope="col" class="px-4 py-3">Status</th>
                                 <th scope="col" class="px-4 py-3">Action</th>
-                                {{-- <th scope="col" class="px-4 py-3">Actions</th> --}}
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">Surat
-                                    Mahasiswa Aktif
-                                </th>
-                                <td class="px-4 py-3">Rafael Yefta Wijaya</td>
-                                <td class="px-4 py-3">14-03-2025</td>
-                                <td class="px-4 py-3">Disetujui</td>
-                                <td class="px-4 py-3 flex items-center justify-start">
-                                    <button type="button"
-                                        class="py-2.5 px-3 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                                        data-modal-target="detailModal" data-modal-toggle="detailModal">Detail</button>
+                            @foreach ($submissions as $submission)
+                                <tr class="border-b dark:border-gray-700">
+                                    <th scope="row"
+                                        class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $submission->jenis_surat }}
+                                    </th>
+                                    <td class="px-4 py-3">{{ $submission->mahasiswa->nama }}</td>
+                                    <td class="px-4 py-3">{{ $submission->tanggal_pengajuan }}</td>
+                                    <td class="px-4 py-3">{{ $submission->status }}</td>
+                                    <td class="px-4 py-3 flex items-center justify-start">
+                                        <button type="button"
+                                            class="py-2.5 px-3 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                                            data-modal-target="detail{{ $submission->id }}"
+                                            data-modal-toggle="detail{{ $submission->id }}">Detail</button>
+                                    </td>
+                                </tr>
 
-                                </td>
-                            </tr>
-                            <!-- Main modal -->
-                            <div id="detailModal" tabindex="-1" aria-hidden="true"
-                                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-                                <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
-                                    <!-- Modal content -->
-                                    <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-                                        <!-- Modal header -->
-                                        <div class="flex justify-between mb-4 rounded-t sm:mb-5">
-                                            <div class="text-lg text-gray-900 md:text-xl dark:text-white">
-                                                <h3 class="font-semibold ">
-                                                    Pengajuan Surat
-                                                </h3>
-                                                <p class="font-bold">
-                                                    Surat Mahasiswa Aktif
-                                                </p>
+                                <!-- Main modal -->
+                                <div id="detail{{ $submission->id }}" tabindex="-1" aria-hidden="true"
+                                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+                                    <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+                                        <!-- Modal content -->
+                                        <div
+                                            class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5 max-h-screen overflow-y-auto">
+                                            <!-- Modal header -->
+                                            <div class="flex justify-between mb-4 rounded-t sm:mb-5">
+                                                <div class="text-lg text-gray-900 md:text-xl dark:text-white">
+                                                    <h3 class="font-semibold ">
+                                                        Pengajuan Surat
+                                                    </h3>
+                                                    <p class="font-bold">
+                                                        {{ $submission->jenis_surat }}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <button type="button"
+                                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white"
+                                                        data-modal-toggle="detail{{ $submission->id }}">
+                                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
+                                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd"
+                                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        <span class="sr-only">Close modal</span>
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <button type="button"
-                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white"
-                                                    data-modal-toggle="detailModal">
-                                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
-                                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd"
-                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                            clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    <span class="sr-only">Close modal</span>
-                                                </button>
+                                            <dl>
+                                                <dl>
+                                                    <h3 class="font-bold text-center mb-2">
+                                                        Detail Surat
+                                                    </h3>
+                                                    @if ($submission->jenis_surat == 'Surat Keterangan Lulus')
+                                                        @php
+                                                            $skl = $suratKL
+                                                                ->where('id_pengajuan', $submission->id)
+                                                                ->first();
+                                                        @endphp
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Nama Lengkap</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $skl->nama_lengkap }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            NRP</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $skl->nrp }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Tanggal Lulus</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $skl->tanggal_lulus }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Tanggal Pengajuan Surat</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $skl->pengajuan->tanggal_pengajuan }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Status</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            <p
+                                                                class="font-semibold text-base {{ $submission->status == 'Disetujui' ? 'text-blue-500' : ($submission->status == 'Menunggu Persetujuan' ? 'text-yellow-500' : ($submission->status == 'Selesai' ? 'text-green-500' : 'text-red-500')) }}">
+                                                                {{ $submission->status }}
+                                                            </p>
+                                                        </dd>
+                                                    @elseif($submission->jenis_surat == 'Surat Pengantar Tugas MK')
+                                                        @php
+                                                            $stmk = $suratTMK
+                                                                ->where('id_pengajuan', $submission->id)
+                                                                ->first();
+                                                        @endphp
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Tujuan Instansi</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $stmk->tujuan_instansi }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Data mahasiswa</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $stmk->data_mahasiswa }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Mata Kuliah</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $stmk->mataKuliah->kode }} - {{ $stmk->mataKuliah->nama }}
+                                                        </dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Tujuan</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $stmk->tujuan }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Topik</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $stmk->topik }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Tanggal Pengajuan Surat</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $stmk->pengajuan->tanggal_pengajuan }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Status</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            <p
+                                                                class="font-semibold text-base {{ $submission->status == 'Disetujui' ? 'text-blue-500' : ($submission->status == 'Menunggu Persetujuan' ? 'text-yellow-500' : ($submission->status == 'Selesai' ? 'text-green-500' : 'text-red-500')) }}">
+                                                                {{ $submission->status }}
+                                                            </p>
+                                                        </dd>
+                                                    @elseif($submission->jenis_surat == 'Surat Keterangan Mahasiswa Aktif')
+                                                        @php
+                                                            $sma = $suratMA
+                                                                ->where('id_pengajuan', $submission->id)
+                                                                ->first();
+                                                        @endphp
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Nama Lengkap</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $sma->nama_lengkap }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            NRP</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $sma->nrp }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Periode</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $sma->periode }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Alamat</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $sma->alamat }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Keperluan Pengajuan</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $sma->keperluan_pengajuan }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Tanggal Pengajuan Surat</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $sma->pengajuan->tanggal_pengajuan }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Status</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            <p
+                                                                class="font-semibold text-base {{ $submission->status == 'Disetujui' ? 'text-blue-500' : ($submission->status == 'Menunggu Persetujuan' ? 'text-yellow-500' : ($submission->status == 'Selesai' ? 'text-green-500' : 'text-red-500')) }}">
+                                                                {{ $submission->status }}
+                                                            </p>
+                                                        </dd>
+                                                    @elseif($submission->jenis_surat == 'Laporan Hasil Studi')
+                                                        @php
+                                                            $lhs = $laporanHS
+                                                                ->where('id_pengajuan', $submission->id)
+                                                                ->first();
+                                                        @endphp
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Nama Lengkap</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $lhs->nama_lengkap }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            NRP</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $lhs->nrp }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Keperluan Pembuatan</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $lhs->keperluan_pembuatan }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Tanggal Pengajuan Surat</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            {{ $lhs->pengajuan->tanggal_pengajuan }}</dd>
+                                                        <dt
+                                                            class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
+                                                            Status</dt>
+                                                        <dd
+                                                            class="mb-4 font-light text-gray-600 sm:mb-5 dark:text-gray-400">
+                                                            <p
+                                                                class="font-semibold text-base {{ $submission->status == 'Disetujui' ? 'text-blue-500' : ($submission->status == 'Menunggu Persetujuan' ? 'text-yellow-500' : ($submission->status == 'Selesai' ? 'text-green-500' : 'text-red-500')) }}">
+                                                                {{ $submission->status }}
+                                                            </p>
+                                                        </dd>
+                                                    @endif
+                                                </dl>
+                                            </dl>
+                                            <div class="flex justify-between items-center">
+                                                @if ($submission->status != 'Disetujui' && $submission != 'Ditolak' && $submission->status != 'Selesai')
+                                                    <button type="button"
+                                                        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Setuju</button>
+
+                                                    <button type="button"
+                                                        class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                                                        Tolak
+                                                    </button>
+                                                @else
+                                                    <button type="button" disabled
+                                                        class="focus:outline-none text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-400 dark:hover:bg-gray-500 dark:focus:ring-gray-700 opacity-50 cursor-not-allowed">Setuju</button>
+
+                                                    <button type="button" disabled
+                                                        class="inline-flex items-center text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-400 dark:hover:bg-gray-500 dark:focus:ring-gray-700 opacity-50 cursor-not-allowed">
+                                                        Tolak
+                                                    </button>
+                                                @endif
                                             </div>
-                                        </div>
-                                        <dl>
-                                            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Nama
-                                                Lengkap</dt>
-                                            <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">Rafael
-                                                Yefta Wijaya</dd>
-                                            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">NRP
-                                            </dt>
-                                            <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">2372037
-                                            </dd>
-                                            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
-                                                Periode</dt>
-                                            <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">Genap
-                                                2024/2025</dd>
-                                            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Alamat
-                                            </dt>
-                                            <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">Jl. Buntu
-                                                No.5</dd>
-                                            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">
-                                                Keperluan Pengajuan</dt>
-                                            <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">Untuk
-                                                mengajukan atau memperpanjang beasiswa</dd>
-                                        </dl>
-                                        <div class="flex justify-between items-center">
-
-                                            <button type="button"
-                                                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Setuju</button>
-
-                                            <button type="button"
-                                                class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
-                                                Tolak
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
+
+
                         </tbody>
                     </table>
                 </div>
-
 
                 {{-- pagination --}}
                 <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
@@ -152,8 +336,9 @@
                                 <span class="sr-only">Previous</span>
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d=" M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414
-                                                            1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                    <path fill-rule="evenodd"
+                                        d=" M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414
+                                                                                                    1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                                         clip-rule="evenodd" />
                                 </svg>
                             </a>

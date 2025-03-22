@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 use App\Models\Jurusan;
+use Illuminate\Support\Facades\Auth;
 
 class MataKuliahController extends Controller
 {
@@ -35,10 +36,10 @@ class MataKuliahController extends Controller
             'kode' => 'required|string|max:12',
             'nama' => 'required|string|max:100',
             'sks' => 'required|int|min:1',
-            'id_jurusan' => 'required|string'
         ])->validate();
 
         $mata_kuliah = new MataKuliah($validateData);
+        $mata_kuliah->id_jurusan = Auth::user()->id_jurusan;
         $mata_kuliah->save();
 
         session()->flash('success', 'Mata Kuliah berhasil ditambahkan');

@@ -7,6 +7,8 @@ use App\Models\Role;
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,15 +17,38 @@ class UserController extends Controller
      */
     public function indexAdmin()
     {
+        $submit = User::query();
+        if (request()->has('search')) {
+            $search = request('search');
+            $submit = $submit->where(function ($query) use ($search) {
+                $query->where('nama', 'like', '%' . $search . '%')
+                      ->orWhereHas('role', function ($query) use ($search) {
+                          $query->where('nama', 'like', '%' . $search . '%');
+                      })
+                      ->orWhereHas('jurusan', function ($query) use ($search) {
+                          $query->where('nama', 'like', '%' . $search . '%');
+                      });
+            });
+        }
+
         return view('admin.user')
-        ->with('users', User::all())
+        ->with('users', $submit->get())
         ->with('roles',Role::all())
         ->with('majors',Jurusan::all());
     }
     public function indexMo()
-    {
+    {   
+        $submit = User::query();
+        if (request()->has('search')) {
+            $search = request('search');
+            $submit = $submit->where(function ($query) use ($search) {
+                $query->where('nama', 'like', '%' . $search . '%')
+                      ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+
         return view('mo.students')
-        ->with('students', User::where('id_role', 4)->where('id_jurusan', Auth::user()->id_jurusan)->get());
+        ->with('students', $submit->where('id_role', 4)->where('id_jurusan', Auth::user()->id_jurusan)->get());
 
     }
 
@@ -43,14 +68,14 @@ class UserController extends Controller
         if (Auth::user()->role->nama == 'Admin') {
             $validateData = validator($request->all(),[
                 'nik' => 'required|string|max:7|unique:user,nik',
-                'nama' => 'required|string|max:100|unique:user,nama',
+                'nama' => 'required|string|max:100',
                 'email' => 'required|email|max:45|unique:user,email',
                 'alamat' => 'required|string|max:45|',
                 'id_role' => 'required|int',
-                'id_jurusan' => 'required|string',
+                'id_jurusan' => 'nullable|string',
                 'password' => 'required|confirmed',
                 'periode' => 'required|string|max:20|',
-                'file_input' => 'nullable|image|mimes:svg,png,jpg,gif',
+                'file_input' => 'nullable|image|mimes:svg,png,jpg,gif,jpeg',
             ])->validate();
 
             $user =  new User($validateData);
@@ -66,7 +91,7 @@ class UserController extends Controller
         } elseif (Auth::user()->role->nama == 'Manager Operasional') {
             $validateData = validator($request->all(),[
                 'nik' => 'required|string|max:7|unique:user,nik',
-                'nama' => 'required|string|max:100|unique:user,nama',
+                'nama' => 'required|string|max:100',
                 'email' => 'required|email|max:45|unique:user,email',
                 'alamat' => 'required|string|max:45|',
                 'password' => 'required|confirmed',
@@ -93,10 +118,16 @@ class UserController extends Controller
     private function uploadImage($validateData) {
         if (isset($validateData['file_input'])) {
             $image = $validateData['file_input'];
+            $imageName = $validateData['nik'] . '.' . $image->getClientOriginalExtension(); 
 
-            $imageName =  $validateData['nik'] . '.' . $image->getClientOriginalExtension(); 
+            // Check if the image already exists
+            $imagePath = public_path('profilePicture') . '/' . $imageName;
+            if (file_exists($imagePath)) {
+                unlink($imagePath); // Delete the old image
+            }
+
             $image->move(public_path('profilePicture'), $imageName);
-             return $imageName;
+            return $imageName;
 
         } else {
             return 'defaultpp.jpg';
@@ -125,6 +156,39 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         //
+
+        $validateData = validator($request->all(),[
+            'nik' => ['required','string','max:7', Rule::unique('user','nik')->ignore($user->nik,'nik')],
+            'nama' => 'required|string|max:100',
+            'email' => ['required','email','max:45', Rule::unique('user','email')->ignore($user->email, 'email')],
+            'alamat' => 'required|string|max:45|',
+            'id_role' => 'required|int',
+            'id_jurusan' => 'nullable|string',
+            'password' => 'sometimes|confirmed',
+            'periode' => 'sometimes|string|max:20|',
+            'file_input' => 'nullable|image|mimes:svg,png,jpg,gif,jpeg',
+        ])->validate();
+
+        $user['nama'] = $validateData['nama'];
+        $user['email'] = $validateData['email'];
+        $user['alamat'] = $validateData['alamat'];
+        $user['password'] = Hash::make($validateData['password']);
+        $user['periode'] = $validateData['periode'];
+
+        $user->image = $this->uploadImage($validateData);
+
+        $user->save();
+
+        if (Auth::user()->role->nama == 'Admin'){
+
+            return redirect()->route('admin-user-crud')
+                ->with('success', 'User Berhasil diupdate');
+        } else if (Auth::user()->role->nama == 'Manager Operasional'){
+            return redirect()->route('mo-students')
+                ->with('success', 'User Berhasil diupdate');
+        }
+
+        
     }
 
     /**

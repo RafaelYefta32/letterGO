@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="public/css/style.css">
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
     {{-- <link rel="icon" href="data:image/svg+xml,<svg class='mr-2 h-8 w-auto' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path fill='%234f46e5' d='M20 14h-2.722L11 20.278a5.511 5.511 0 0 1-.9.722H20a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1ZM9 3H4a1 1 0 0 0-1 1v13.5a3.5 3.5 0 1 0 7 0V4a1 1 0 0 0-1-1ZM6.5 18.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM19.132 7.9 15.6 4.368a1 1 0 0 0-1.414 0L12 6.55v9.9l7.132-7.132a1 1 0 0 0 0-1.418Z'/></svg>"> --}}
@@ -21,7 +20,8 @@
 <body>
     <div class="antialiased bg-gray-50 dark:bg-gray-900">
         <nav
-            class="bg-cyan-900 border-b border-gray-200 px-4 py-2.5 dark:bg-cyan-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
+            class="bg-cyan-900 border-b border-gray-200 px-4 dark:bg-cyan-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
+            {{-- <x-notify::notify style="position: fixed; top: 10; left: 0; right: 0; z-index: 9999;" /> --}}
             <div class="flex flex-wrap justify-between items-center">
                 <div class="flex justify-start items-center">
                     <button data-drawer-target="drawer-navigation" data-drawer-toggle="drawer-navigation"
@@ -42,9 +42,9 @@
                         <span class="sr-only">Toggle sidebar</span>
                     </button>
                     <a href="https://flowbite.com" class="flex items-center justify-between mr-4">
-                        <img src="https://flowbite.s3.amazonaws.com/logo.svg" class="mr-3 h-8" alt="Flowbite Logo" />
-                        <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">LetterGo
-                            (MO)</span>
+                        {{-- <img src="https://flowbite.s3.amazonaws.com/logo.svg" class="mr-3 h-8" alt="Flowbite Logo" /> --}}
+                        <img class="w-14 h-15 md:w-20 lg:w-18" src="{{ asset('img/logoLetter.png') }}" alt="Logo">
+                        <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">LetterGo</span>
                     </a>
                 </div>
                 <div class="flex items-center lg:order-2">
@@ -105,6 +105,118 @@
                                     </div>
                                     <div class="text-xs font-medium text-primary-600 dark:text-primary-500">
                                         a few moments ago
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#"
+                                class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600">
+                                <div class="flex-shrink-0">
+                                    <img class="w-11 h-11 rounded-full"
+                                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
+                                        alt="Jese Leos avatar" />
+                                    <div
+                                        class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-gray-900 rounded-full border border-white dark:border-gray-700">
+                                        <svg aria-hidden="true" class="w-3 h-3 text-white" fill="currentColor"
+                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="pl-3 w-full">
+                                    <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400">
+                                        <span class="font-semibold text-gray-900 dark:text-white">Jese leos</span>
+                                        and
+                                        <span class="font-medium text-gray-900 dark:text-white">5 others</span>
+                                        started following you.
+                                    </div>
+                                    <div class="text-xs font-medium text-primary-600 dark:text-primary-500">
+                                        10 minutes ago
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#"
+                                class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600">
+                                <div class="flex-shrink-0">
+                                    <img class="w-11 h-11 rounded-full"
+                                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
+                                        alt="Joseph McFall avatar" />
+                                    <div
+                                        class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-red-600 rounded-full border border-white dark:border-gray-700">
+                                        <svg aria-hidden="true" class="w-3 h-3 text-white" fill="currentColor"
+                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="pl-3 w-full">
+                                    <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400">
+                                        <span class="font-semibold text-gray-900 dark:text-white">Joseph Mcfall</span>
+                                        and
+                                        <span class="font-medium text-gray-900 dark:text-white">141 others</span>
+                                        love your story. See it and view more stories.
+                                    </div>
+                                    <div class="text-xs font-medium text-primary-600 dark:text-primary-500">
+                                        44 minutes ago
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#"
+                                class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600">
+                                <div class="flex-shrink-0">
+                                    <img class="w-11 h-11 rounded-full"
+                                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
+                                        alt="Roberta Casas image" />
+                                    <div
+                                        class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-green-400 rounded-full border border-white dark:border-gray-700">
+                                        <svg aria-hidden="true" class="w-3 h-3 text-white" fill="currentColor"
+                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="pl-3 w-full">
+                                    <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400">
+                                        <span class="font-semibold text-gray-900 dark:text-white">Leslie
+                                            Livingston</span>
+                                        mentioned you in a comment:
+                                        <span
+                                            class="font-medium text-primary-600 dark:text-primary-500">@bonnie.green</span>
+                                        what do you say?
+                                    </div>
+                                    <div class="text-xs font-medium text-primary-600 dark:text-primary-500">
+                                        1 hour ago
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#" class="flex py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <div class="flex-shrink-0">
+                                    <img class="w-11 h-11 rounded-full"
+                                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/robert-brown.png"
+                                        alt="Robert image" />
+                                    <div
+                                        class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-purple-500 rounded-full border border-white dark:border-gray-700">
+                                        <svg aria-hidden="true" class="w-3 h-3 text-white" fill="currentColor"
+                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="pl-3 w-full">
+                                    <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400">
+                                        <span class="font-semibold text-gray-900 dark:text-white">Robert Brown</span>
+                                        posted a new video: Glassmorphism - learn how to implement
+                                        the new design trend.
+                                    </div>
+                                    <div class="text-xs font-medium text-primary-600 dark:text-primary-500">
+                                        3 hours ago
                                     </div>
                                 </div>
                             </a>
@@ -276,6 +388,11 @@
                                 class="block text-sm font-semibold text-gray-900 dark:text-white">{{ Auth::user()->nama }}</span>
                             <span
                                 class="block text-sm text-gray-900 truncate dark:text-white">{{ Auth::user()->email }}</span>
+                            @if (Auth::user()->role->nama != 'Admin')
+                                <span class="block text-sm text-gray-900 truncate dark:text-white"><b>{{ Auth::user()->role->nama }}<br>{{ Auth::user()->jurusan->nama }}</b></span>
+                            @else
+                                <span class="block text-sm text-gray-900 truncate dark:text-white"><b>{{ Auth::user()->role->nama }}</b></span>
+                            @endif
                         </div>
                         <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
                             <li>
@@ -286,7 +403,7 @@
                         </ul>
                         <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
                             <li>
-                                <a href="#"
+                                <a href="{{ route('logout') }}"
                                     class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign
                                     out</a>
                             </li>
@@ -302,57 +419,127 @@
             aria-label="Sidenav" id="drawer-navigation">
             <div class="overflow-y-auto py-5 px-3 h-full bg-cyan-900 dark:bg-cyan-800">
                 <ul class="space-y-2">
-                    <li>
-                        <a href="{{ route('mo-dashboard') }}"
-                            class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
-                            <svg aria-hidden="true"
-                                class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
-                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                            </svg>
-                            <span class="ml-3">Overview</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('mo-students') }}"
-                            class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
-                            <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
-                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path fill-rule="evenodd"
-                                    d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span class="ml-3">Students</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('mo-course') }}"
-                            class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
-                            <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
-                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path fill-rule="evenodd"
-                                    d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span class="ml-3">Course</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('mo-letter') }}"
-                            class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
-                            <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
-                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path fill-rule="evenodd"
-                                    d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11.5c.07 0 .14-.007.207-.021.095.014.193.021.293.021h2a2 2 0 0 0 2-2V7a1 1 0 0 0-1-1h-1a1 1 0 1 0 0 2v11h-2V5a2 2 0 0 0-2-2H5Zm7 4a1 1 0 0 1 1-1h.5a1 1 0 1 1 0 2H13a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h.5a1 1 0 1 1 0 2H13a1 1 0 0 1-1-1Zm-6 4a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1ZM7 6a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H7Zm1 3V8h1v1H8Z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span class="ml-3">Letter</span>
-                        </a>
-                    </li>
+                    @if (Auth::user()->role->nama == 'Admin')
+                        <li>
+                            <a href="{{ route('admin-dashboard') }}"
+                                class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
+                                <svg aria-hidden="true"
+                                    class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                                </svg>
+                                <span class="ml-3">Overview</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin-user-crud') }}"
+                                class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
+                                <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-3">Users</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin-major') }}"
+                                class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
+                                <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="m6 10.5237-2.27075.6386C3.29797 11.2836 3 11.677 3 12.125V20c0 .5523.44772 1 1 1h2V10.5237Zm12 0 2.2707.6386c.4313.1213.7293.5147.7293.9627V20c0 .5523-.4477 1-1 1h-2V10.5237Z" />
+                                    <path fill-rule="evenodd"
+                                        d="M12.5547 3.16795c-.3359-.22393-.7735-.22393-1.1094 0l-6.00002 4c-.45952.30635-.5837.92722-.27735 1.38675.30636.45953.92723.5837 1.38675.27735L8 7.86853V21h8V7.86853l1.4453.96352c.0143.00957.0289.01873.0435.02746.1597.09514.3364.14076.5112.1406.3228-.0003.6395-.15664.832-.44541.3064-.45953.1822-1.0804-.2773-1.38675l-6-4ZM10 12c0-.5523.4477-1 1-1h2c.5523 0 1 .4477 1 1s-.4477 1-1 1h-2c-.5523 0-1-.4477-1-1Zm1-4c-.5523 0-1 .44772-1 1s.4477 1 1 1h2c.5523 0 1-.44772 1-1s-.4477-1-1-1h-2Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-3">Major</span>
+                            </a>
+                        </li>
+                    @elseif(Auth::user()->role->nama == 'Manager Operasional')
+                        <li>
+                            <a href="{{ route('mo-dashboard') }}"
+                                class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
+                                <svg aria-hidden="true"
+                                    class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                                </svg>
+                                <span class="ml-3">Overview</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('mo-students') }}"
+                                class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
+                                <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-3">Students</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('mo-course') }}"
+                                class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
+                                <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-3">Course</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('mo-letter') }}"
+                                class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
+                                <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11.5c.07 0 .14-.007.207-.021.095.014.193.021.293.021h2a2 2 0 0 0 2-2V7a1 1 0 0 0-1-1h-1a1 1 0 1 0 0 2v11h-2V5a2 2 0 0 0-2-2H5Zm7 4a1 1 0 0 1 1-1h.5a1 1 0 1 1 0 2H13a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h.5a1 1 0 1 1 0 2H13a1 1 0 0 1-1-1Zm-6 4a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1ZM7 6a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H7Zm1 3V8h1v1H8Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-3">Letter</span>
+                            </a>
+                        </li>
+                    @elseif(Auth::user()->role->nama == 'Kepala Program Studi')
+                        <li>
+                            <a href="{{ route('kaprodi-dashboard') }}"
+                                class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
+                                <svg aria-hidden="true"
+                                    class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                                </svg>
+                                <span class="ml-3">Overview</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('kaprodi-submissions') }}"
+                                class="flex items-center p-2 text-base font-medium text-white rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-700 group">
+                                <svg class="w-6 h-6 text-gray-200 transition duration-75 group-hover:text-white"
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11.5c.07 0 .14-.007.207-.021.095.014.193.021.293.021h2a2 2 0 0 0 2-2V7a1 1 0 0 0-1-1h-1a1 1 0 1 0 0 2v11h-2V5a2 2 0 0 0-2-2H5Zm7 4a1 1 0 0 1 1-1h.5a1 1 0 1 1 0 2H13a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h.5a1 1 0 1 1 0 2H13a1 1 0 0 1-1-1Zm-6 4a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1ZM7 6a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H7Zm1 3V8h1v1H8Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-3">Submission</span>
+                            </a>
+                        </li>
+                    @endif
+
                 </ul>
                 <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
                     <li>
@@ -372,32 +559,12 @@
                 </ul>
             </div>
         </aside>
-
-        {{-- <main class="p-4 md:ml-64 h-auto pt-20">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                <div class="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64"></div>
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"></div>
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"></div>
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"></div>
-            </div>
-            <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"></div>
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-            </div>
-            <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"></div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-                <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-            </div>
-        </main> --}}
-
         @yield('content')
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     @if (session('success'))
         <script>
             Swal.fire({
@@ -424,12 +591,6 @@
             });
         </script>
     @endif
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-
-
 </body>
 
 </html>

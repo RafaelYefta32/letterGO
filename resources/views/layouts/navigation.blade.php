@@ -148,9 +148,9 @@
                         <!-- Current: "bg-cyan-900 text-white", Default: "text-cyan-200 hover:bg-cyan-700 hover:text-white" -->
                         <x-nav-link href="/home" :active="request()->is('home')">Home</x-nav-link>
 
-                        <x-nav-link href="/submit" :active="request()->is('submit')">Submit Letter</x-nav-link>
+                        <x-nav-link href="{{ route('mahasiswa-submit') }}" :active="request()->is('submit')">Submit Letter</x-nav-link>
 
-                        <x-nav-link href="/history" :active="request()->is('history')">History</x-nav-link>
+                        <x-nav-link href="{{ route('mahasiswa-history') }}" :active="request()->is('history')">History</x-nav-link>
 
                     </div>
                 </div>

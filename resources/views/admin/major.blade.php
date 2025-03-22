@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('layouts.layout')
 
 @section('content')
     <main class="p-4 md:ml-64 h-auto pt-20">
@@ -21,20 +21,20 @@
                                         </svg>
                                     </div>
                                     <input type="text" id="simple-search"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Search by name or email" autocomplete="off" name="search"
                                         required="">
                                 </div>
                                 <div>
                                     <button type="submit"
-                                        class="py-2 px-4 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-primary-700 border-primary-600 sm:rounded-none sm:rounded-r-lg hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                        class="py-2 px-4 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-cyan-800 border-primary-600 sm:rounded-none sm:rounded-r-lg hover:bg-cyan-700 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                                         autocomplete="off">Search</button>
                                 </div>
                             </form>
                         </div>
                         <div class="flex justify-center m-5">
                             <button id="defaultModalButton" data-modal-target="createModal" data-modal-toggle="createModal"
-                                class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                                class="flex items-center justify-center text-white bg-cyan-800 hover:bg-cyan-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                                 type="button">
                                 <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -124,7 +124,7 @@
                                     </th>
                                     <td class="px-4 py-3">{{ $major->nama }}</td>
                                     <td class="px-4 py-3 flex items-center justify-end">
-                                        <button id="dropdown-button-{{$major->kode }}"
+                                        <button id="dropdown-button-{{ $major->kode }}"
                                             data-dropdown-toggle="dropdown-{{ $major->kode }}"
                                             class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                                             type="button">
@@ -137,10 +137,11 @@
                                         <div id="dropdown-{{ $major->kode }}"
                                             class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                             <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                                aria-labelledby="dropdown-button-{{$major->kode }}">
+                                                aria-labelledby="edit{{ $major->kode }}">
                                                 <li>
-                                                    <a href="#"
-                                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                    <button id="updateButton" data-modal-target="edit{{ $major->kode }}"
+                                                        data-modal-toggle="edit{{ $major->kode }}"
+                                                        class="block py-2 px-4 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</button>
                                                 </li>
                                             </ul>
                                             <div class="py-1">
@@ -150,6 +151,66 @@
                                         </div>
                                     </td>
                                 </tr>
+
+                                <!-- Edit modal -->
+                                <div id="edit{{ $major->kode }}" tabindex="-1" aria-hidden="true"
+                                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+                                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                        <!-- Modal content -->
+                                        <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                                            <!-- Modal header -->
+                                            <div
+                                                class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    Edit Major
+                                                </h3>
+                                                <button type="button"
+                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                    data-modal-toggle="edit{{ $major->kode }}">
+                                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
+                                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    <span class="sr-only">Close modal</span>
+                                                </button>
+                                            </div>
+                                            <!-- Modal body -->
+                                            <form action="{{ route('admin-major-store') }}" method="post">
+                                                @csrf
+                                                <div class="grid gap-3 mb-4 sm:grid-cols-2">
+                                                    <div>
+                                                        <label for="kode"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode</label>
+                                                        <input type="text" name="kode" id="kode"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            placeholder="2" required autocomplete="off" maxlength="2" value="{{$major->kode}}" readonly>
+                                                    </div>
+                                                    <div>
+                                                        <label for="nama"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
+                                                            Jurusan</label>
+                                                        <input type="text" name="nama" id="nama"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            placeholder="Teknik Inforamtika" required autocomplete="off"
+                                                            maxlength="18" value="{{$major->nama}}">
+                                                    </div>
+                                                </div>
+                                                <button type="submit"
+                                                    class="text-white inline-flex items-center bg-cyan-800 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                                    <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor"
+                                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    Edit Major
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </tbody>
                     </table>

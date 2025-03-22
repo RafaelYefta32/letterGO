@@ -1,4 +1,4 @@
-@extends('mo.layout')
+@extends('layouts.layout')
 
 @section('content')
     <main class="p-4 md:ml-64 h-auto pt-20">

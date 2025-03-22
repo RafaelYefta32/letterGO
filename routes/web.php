@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\LetterController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -33,18 +34,19 @@ Route::middleware('auth')->group(function () {
 
 });
 
-// Mahasiswa route
-Route::get('/submit', function () {
-    return view('mahasiswa.submit');
-});
-Route::get('/history', function () {
-    return view('mahasiswa.history');
-});
+// MAHASISWA ROUTE
+Route::get('/submit', [LetterController::class, 'create'])->middleware(['auth', 'verified'])->name('mahasiswa-submit');
+
+Route::get('/history', [LetterController::class, 'index'])->middleware(['auth', 'verified'])->name('mahasiswa-history');
+Route::post('/history', [LetterController::class, 'index'])->middleware(['auth', 'verified'])->name('mahasiswa-history');
+
 Route::get('/profile', function () {
     return view('mahasiswa.profile');
-});
+})->name('mahasiswa-profile');
 
-// MO route
+Route::post('/submit', [LetterController::class, 'store'])->middleware(['auth', 'verified'])->name('mahasiswa-store');
+
+// MO ROUTE
 Route::get('/dashboard', function () { 
     return view('mo.dashboard');
 })->middleware(['auth', 'verified'])->name('mo-dashboard'); 
@@ -52,6 +54,8 @@ Route::get('/dashboard', function () {
 Route::get('/student/crud', [UserController::class, 'indexMo'])->middleware(['auth', 'verified'])->name('mo-students'); 
 
 Route::post('/student/crud', [UserController::class,'store'])->middleware(['auth', 'verified'])->name('mo-students-store');
+
+Route::put('/student/crud/{student}', [UserController::class,'update'])->middleware(['auth', 'verified'])->name('mo-students-update');
 
 Route::get('/letter', function () { 
     return view('mo.letter');
@@ -61,7 +65,7 @@ Route::get('/course', [MataKuliahController::class,'index'])->middleware(['auth'
 
 Route::post('/course',[MataKuliahController::class,'store'])->middleware(['auth','verified'])->name('mo-course-store');
 
-// admin route
+// ADMIN ROUTE
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('admin-dashboard');
@@ -70,17 +74,17 @@ Route::get('/user/crud', [UserController::class,'indexAdmin'])->middleware(['aut
 
 Route::post('/user/crud', [UserController::class,'store'])->middleware(['auth', 'verified'])->name('admin-user-store');
 
+Route::put('/user/crud/{user}', [UserController::class,'update'])->middleware(['auth', 'verified'])->name('admin-user-update');
+
 Route::get('/major', [JurusanController::class,'index'])->middleware(['auth', 'verified'])->name('admin-major');
 
 Route::post('/major', [JurusanController::class,'store'])->middleware(['auth', 'verified'])->name('admin-major-store');
 
-// kaprodi route
+// KAPRODI ROUTE
 Route::get('/kaprodi/dashboard', function () {
     return view('kaprodi.dashboard');
 })->middleware(['auth', 'verified'])->name('kaprodi-dashboard');
 
-Route::get('/kaprodi/pengajuan', function () {
-    return view('kaprodi.pengajuan');
-})->middleware(['auth', 'verified'])->name('kaprodi-pengajuan');
+Route::get('/kaprodi/submissions', [LetterController::class, 'index'])->middleware(['auth', 'verified'])->name('kaprodi-submissions');
 
 require __DIR__.'/auth.php';
