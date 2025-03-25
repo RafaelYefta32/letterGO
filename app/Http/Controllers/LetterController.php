@@ -161,4 +161,19 @@ class LetterController extends Controller
     {
         //
     }
+
+    public function accept(Pengajuan $pengajuan) {
+        $pengajuan->status = 'Disetujui';
+        $pengajuan->tanggal_persetujuan = now();
+        $pengajuan->kaprodi_nik = Auth::user()->nik;
+        $pengajuan->save();
+        return redirect()->route('kaprodi-submissions')->with('success', 'Surat telah disetujui');
+    }
+    
+    public function reject(Pengajuan $pengajuan) {
+        $pengajuan->status = 'Ditolak';
+        $pengajuan->kaprodi_nik = Auth::user()->nik;
+        $pengajuan->save();
+        return redirect()->route('kaprodi-submissions')->with('reject', 'Surat telah ditolak');
+    }
 }

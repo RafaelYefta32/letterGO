@@ -18,7 +18,7 @@
                         </div>
                         <div>
                             <h5 class="mb-1 text-base text-gray-500 dark:text-white">Mahasiswa</h5>
-                            <p class="font-bold text-gray-700 dark:text-gray-400">70</p>
+                            <p class="font-bold text-gray-700 dark:text-gray-400">{{ $totalStudent }}</p>
                         </div>
                     </div>
 
@@ -36,7 +36,7 @@
                         </div>
                         <div>
                             <h5 class="mb-1 text-base text-gray-500 dark:text-white">Mata Kuliah</h5>
-                            <p class="font-bold text-gray-700 dark:text-gray-400">50</p>
+                            <p class="font-bold text-gray-700 dark:text-gray-400">{{ $totalMataKuliah }}</p>
                         </div>
                     </div>
                     <!-- Card 3 (Surat Siap Upload) -->
@@ -52,29 +52,25 @@
                         </div>
                         <div>
                             <h5 class="mb-1 text-base text-gray-500 dark:text-white">Surat Siap Upload</h5>
-                            <p class="font-bold text-gray-700 dark:text-gray-400">100</p>
+                            <p class="font-bold text-gray-700 dark:text-gray-400">{{ $totalLetter }}</p>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="grid grid-cols-1 lg:grid-cols-[auto,auto] gap-6 items-start">
+
+                <div class="grid grid-cols-1 lg:grid-cols-[auto,2fr] gap-6 items-start">
                     <!-- Diagram Pie Chart -->
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full min-w-[400px] h-auto">
-                        <h1 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Distribusi Surat</h1>
-    
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full min-w-[350px] h-auto">
+                        <h1 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Jenis Pengajuan Surat</h1>
+
                         <div class="flex flex-col items-center">
                             <!-- Chart -->
-                            <div class="chart-container w-[300px] h-[300px]">
+                            <div class="chart-container w-full max-w-[300px] h-[300px]">
                                 <canvas id="pieChart"></canvas>
                             </div>
-    
-                            <!-- Legend -->
-                            <div id="legend-container" class="mt-6 max-w-[300px] text-center"></div>
                         </div>
                     </div>
-    
-
                     <!-- Tabel Daftar Surat -->
                     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md min-w-[400px] h-auto">
                         <h1 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Daftar Surat Terbaru</h1>
@@ -86,53 +82,33 @@
                                         <th class="px-6 py-3">No</th>
                                         <th class="px-6 py-3">Jenis Surat</th>
                                         <th class="px-6 py-3">Nama Mahasiswa</th>
-                                        <th class="px-6 py-3">Tanggal Pengajuan</th>
+                                        <th class="px-6 py-3">Tanggal Persetujuan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($latestLetterList as $letter)
+                                        
+                                    
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-3">1</td>
-                                        <td class="px-6 py-3">Surat Keterangan Aktif</td>
-                                        <td class="px-6 py-3">John Doe</td>
-                                        <td class="px-6 py-3">2025-03-18</td>
+                                        <td class="px-6 py-3">{{ $loop->iteration }}</td>
+                                        <td class="px-6 py-3">{{ $letter->jenis_surat }}</td>
+                                        <td class="px-6 py-3">{{ $letter->mahasiswa->nama }}</td>
+                                        <td class="px-6 py-3">{{ $letter->tanggal_persetujuan }}</td>
                                     </tr>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-3">2</td>
-                                        <td class="px-6 py-3">Surat Cuti Akademik</td>
-                                        <td class="px-6 py-3">Jane Smith</td>
-                                        <td class="px-6 py-3">2025-03-17</td>
-                                    </tr>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-3">3</td>
-                                        <td class="px-6 py-3">Surat Keterangan Lulus</td>
-                                        <td class="px-6 py-3">Michael Johnson</td>
-                                        <td class="px-6 py-3">2025-03-16</td>
-                                    </tr>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-3">4</td>
-                                        <td class="px-6 py-3">Surat Rekomendasi Beasiswa</td>
-                                        <td class="px-6 py-3">Emily Davis</td>
-                                        <td class="px-6 py-3">2025-03-15</td>
-                                    </tr>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-3">5</td>
-                                        <td class="px-6 py-3">Surat Pengunduran Diri</td>
-                                        <td class="px-6 py-3">David Wilson</td>
-                                        <td class="px-6 py-3">2025-03-14</td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                 <!-- Tabel Daftar Pengguna Terbaru -->
-                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md min-w-[400px] h-auto mt-4">
+
+                <!-- Tabel Daftar Pengguna Terbaru -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md min-w-[400px] h-auto mt-4">
                     <h1 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Daftar Mahasiswa Terbaru</h1>
                     <div class="relative overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th class="px-6 py-3">No</th>
                                     <th class="px-6 py-3">Nik</th>
@@ -141,43 +117,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($latestStudentList as $student )
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-3">1</td>
-                                    <td class="px-6 py-3">1234567890</td>
-                                    <td class="px-6 py-3">John Doe</td>
-                                    <td class="px-6 py-3">2025-03-18</td>
+                                    <td class="px-6 py-3">{{ $loop->iteration }}</td>
+                                    <td class="px-6 py-3">{{ $student->nik }}</td>
+                                    <td class="px-6 py-3">{{ $student->nama }}</td>
+                                    <td class="px-6 py-3">{{ $student->created_at }}</td>
                                 </tr>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-3">2</td>
-                                    <td class="px-6 py-3">0987654321</td>
-                                    <td class="px-6 py-3">Jane Smith</td>
-                                    <td class="px-6 py-3">2025-03-17</td>
-                                </tr>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-3">3</td>
-                                    <td class="px-6 py-3">5678901234</td>
-                                    <td class="px-6 py-3">Michael Johnson</td>
-                                    <td class="px-6 py-3">2025-03-16</td>
-                                </tr>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-3">4</td>
-                                    <td class="px-6 py-3">3456789012</td>
-                                    <td class="px-6 py-3">Emily Davis</td>
-                                    <td class="px-6 py-3">2025-03-15</td>
-                                </tr>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-3">5</td>
-                                    <td class="px-6 py-3">2345678901</td>
-                                    <td class="px-6 py-3">David Wilson</td>
-                                    <td class="px-6 py-3">2025-03-14</td>
-                                </tr>
+                                @endforeach
+                                
+                                
                             </tbody>
                         </table>
                     </div>
                 </div>
 
 
-               
+
 
 
 
@@ -190,7 +146,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-piecelabel@0.3.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-    
+
 
     <script>
         var pieChart = document.getElementById("pieChart").getContext("2d");
@@ -205,10 +161,10 @@
                     "Laporan Hasil Studi",
                 ],
                 datasets: [{
-                    data: [40, 25, 20, 15], // Data contoh, bisa diambil dari database
+                    data: [{{ $totalLetterMA }}, {{ $totalLetterTMK }}, {{ $totalLetterKL }}, {{ $totalLetterHS }}],
                     backgroundColor: ["#2C7DA0", "#00A6A6", "#F4A259", "#8FC93A"],
                     borderWidth: 1,
-                    borderColor: "#ffffff", // Border putih agar kontras
+                    borderColor: "#ffffff",
                 }],
             },
             options: {
@@ -216,7 +172,7 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        position: "bottom", // Pindahkan legend ke bawah
+                        position: "bottom",
                         labels: {
                             font: {
                                 size: 12,
@@ -225,15 +181,15 @@
                         },
                     },
                     datalabels: {
-                        display: true, // Tampilkan datalabels
-                        color: "white", // Warna font label
+                        display: context => context.dataset.data[context.dataIndex] >= 1,
+                        color: "white",
                         font: {
-                            size: 14, // Ukuran font label
+                            size: 14,
                         },
                     },
                 },
             },
-            plugins: [ChartDataLabels], // Tambahkan plugin datalabels
+            plugins: [ChartDataLabels],
         });
     </script>
 @endsection

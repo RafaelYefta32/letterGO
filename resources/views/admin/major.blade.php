@@ -177,8 +177,9 @@
                                                 </button>
                                             </div>
                                             <!-- Modal body -->
-                                            <form action="{{ route('admin-major-store') }}" method="post">
+                                            <form action="{{ route('admin-major-update',[$major->kode]) }}" method="post">
                                                 @csrf
+                                                @method('PUT')
                                                 <div class="grid gap-3 mb-4 sm:grid-cols-2">
                                                     <div>
                                                         <label for="kode"

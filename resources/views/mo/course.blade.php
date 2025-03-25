@@ -188,8 +188,9 @@
                                                 </button>
                                             </div>
                                             <!-- Modal body -->
-                                            <form action="{{ route('mo-course-store') }}" method="post">
+                                            <form action="{{ route('mo-course-update', [$course->kode]) }}" method="post">
                                                 @csrf
+                                                @method('PUT')
                                                 <div class="grid gap-3 mb-4 sm:grid-cols-2">
                                                     <div>
                                                         <label for="kode"
@@ -214,7 +215,7 @@
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SKS</label>
                                                         <input type="number" name="sks" id="sks"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                            placeholder="4" required autocomplete="off" value="{{$course->sks}}">
+                                                            placeholder="4" required autocomplete="off" value="{{$course->SKS}}">
                                                     </div>
                                                 </div>
                                                 <button type="submit"

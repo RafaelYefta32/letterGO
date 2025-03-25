@@ -565,13 +565,26 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-    @if (session('success'))
+    @if (session('success') )
         <script>
             Swal.fire({
                 toast: true,
                 position: 'top-end',
                 icon: 'success',
                 title: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        </script>
+    @endif
+    @if (session('reject') )
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: '{{ session('reject') }}',
                 showConfirmButton: false,
                 timer: 3000,
                 timerProgressBar: true,

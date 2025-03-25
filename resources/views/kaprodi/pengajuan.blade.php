@@ -292,14 +292,23 @@
                                                 </dl>
                                             </dl>
                                             <div class="flex justify-between items-center">
-                                                @if ($submission->status != 'Disetujui' && $submission != 'Ditolak' && $submission->status != 'Selesai')
-                                                    <button type="button"
+                                                @if ($submission->status != 'Disetujui' && $submission->status != 'Ditolak' && $submission->status != 'Selesai')
+                                                    <form action="{{ route('kaprodi-submissions-accept', [$submission->id]) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit"
                                                         class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Setuju</button>
-
-                                                    <button type="button"
+                                                    </form>
+                                                    
+                                                    <form action="{{ route('kaprodi-submissions-reject',[$submission->id])}}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit"
                                                         class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
                                                         Tolak
                                                     </button>
+                                                    </form>
+                                                  
                                                 @else
                                                     <button type="button" disabled
                                                         class="focus:outline-none text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-400 dark:hover:bg-gray-500 dark:focus:ring-gray-700 opacity-50 cursor-not-allowed">Setuju</button>

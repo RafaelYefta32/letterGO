@@ -18,7 +18,7 @@
                         </div>
                         <div>
                             <h5 class="mb-1 text-base text-gray-500 dark:text-white">User</h5>
-                            <p class="font-bold text-gray-700 dark:text-gray-400">100</p>
+                            <p class="font-bold text-gray-700 dark:text-gray-400">{{ $totalUser }}</p>
                         </div>
                     </div>
     
@@ -37,7 +37,7 @@
                         </div>
                         <div>
                             <h5 class="mb-1 text-base text-gray-500 dark:text-white">Major</h5>
-                            <p class="font-bold text-gray-700 dark:text-gray-400">5</p>
+                            <p class="font-bold text-gray-700 dark:text-gray-400">{{ $totalMajor }}</p>
                         </div>
                     </div>
     
@@ -52,7 +52,7 @@
                         </div>
                         <div>
                             <h5 class="mb-1 text-base text-gray-500 dark:text-white">New User</h5>
-                            <p class="font-bold text-gray-700 dark:text-gray-400">10</p>
+                            <p class="font-bold text-gray-700 dark:text-gray-400">{{ $totalNewUser }}</p>
                         </div>
                     </div>
                 </div>
@@ -73,41 +73,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                                    <td class="px-6 py-3">1</td>
-                                    <td class="px-6 py-3">1234567890</td>
-                                    <td class="px-6 py-3 ">John Doe</td>
-                                    <td class="px-6 py-3">Admin</td>
-                                    <td class="px-6 py-3">2025-03-18</td>
-                                </tr>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                                    <td class="px-6 py-3">2</td>
-                                    <td class="px-6 py-3">0987654321</td>
-                                    <td class="px-6 py-3">Jane Smith</td>
-                                    <td class="px-6 py-3">User</td>
-                                    <td class="px-6 py-3">2025-03-17</td>
-                                </tr>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                                    <td class="px-6 py-3">3</td>
-                                    <td class="px-6 py-3">1122334455</td>
-                                    <td class="px-6 py-3 ">Alice Johnson</td>
-                                    <td class="px-6 py-3">User</td>
-                                    <td class="px-6 py-3">2025-03-16</td>
-                                </tr>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                                    <td class="px-6 py-3">4</td>
-                                    <td class="px-6 py-3">6677889900</td>
-                                    <td class="px-6 py-3 ">Michael Brown</td>
-                                    <td class="px-6 py-3">User</td>
-                                    <td class="px-6 py-3">2025-03-15</td>
-                                </tr>
-                                <tr class="bg-white dark:bg-gray-800">
-                                    <td class="px-6 py-3">5</td>
-                                    <td class="px-6 py-3">5544332211</td>
-                                    <td class="px-6 py-3 ">Emma Wilson</td>
-                                    <td class="px-6 py-3">User</td>
-                                    <td class="px-6 py-3">2025-03-14</td>
-                                </tr>
+                                @foreach ($latestUserList as $user)
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                                        <td class="px-6 py-3">{{ $loop->iteration }}</td>
+                                        <td class="px-6 py-3">{{ $user->nik }}</td>
+                                        <td class="px-6 py-3 ">{{ $user->nama }}</td>
+                                        <td class="px-6 py-3">{{ $user->role->nama }}</td>
+                                        <td class="px-6 py-3">{{ $user->created_at }}</td>
+                                    </tr>
+                                @endforeach
+                               
                             </tbody>
                         </table>
                     </div>

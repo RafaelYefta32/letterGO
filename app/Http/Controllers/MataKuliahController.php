@@ -6,6 +6,7 @@ use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 use App\Models\Jurusan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class MataKuliahController extends Controller
 {
@@ -33,8 +34,8 @@ class MataKuliahController extends Controller
     public function store(Request $request)
     {
         $validateData = validator($request->all(),[
-            'kode' => 'required|string|max:12',
-            'nama' => 'required|string|max:100',
+            'kode' => 'required|string|max:12|unique:mata_kuliah,kode',
+            'nama' => 'required|string|max:100|unique:mata_kuliah,nama',
             'sks' => 'required|int|min:1',
         ])->validate();
 
@@ -68,7 +69,19 @@ class MataKuliahController extends Controller
      */
     public function update(Request $request, MataKuliah $mataKuliah)
     {
-        //
+        $validateData = validator($request->all(),[
+            'kode' => ['required','string','max:12', Rule::unique('mata_kuliah','kode')->ignore($mataKuliah->kode, 'kode')],
+            'nama' => ['required','string','max:100', Rule::unique('mata_kuliah','nama')->ignore($mataKuliah->nama, 'nama')],
+            'sks' => 'required|int|min:1',
+        ])->validate();
+
+        $mataKuliah->nama = $validateData['nama'];
+        $mataKuliah->sks = $validateData['sks'];
+        $mataKuliah->save();
+
+        session()->flash('success', 'Mata Kuliah berhasil diupdate');
+
+        return redirect()->route('mo-course');
     }
 
     /**

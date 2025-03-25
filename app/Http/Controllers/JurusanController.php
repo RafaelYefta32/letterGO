@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 
 class JurusanController extends Controller
@@ -37,7 +38,7 @@ class JurusanController extends Controller
         $jurusan = new Jurusan($validateData);
         $jurusan->save();
         
-        session()->flash('success', 'Data jurusan berhasil ditambahkan!');
+        session()->flash('success', 'Jurusan berhasil ditambahkan!');
 
         return redirect()->route('admin-major');
     }
@@ -63,7 +64,17 @@ class JurusanController extends Controller
      */
     public function update(Request $request, Jurusan $jurusan)
     {
-        //
+        $validateData = validator($request->all(), [
+            'kode' => ['required','string','max:2',Rule::unique('jurusan', 'kode')->ignore($jurusan->kode,'kode')],
+            'nama' => ['required','string','max:18',Rule::unique('jurusan', 'nama')->ignore($jurusan->nama,'nama')]
+        ])->validate();
+
+        $jurusan->nama = $validateData['nama'];
+        $jurusan->save();
+        
+        session()->flash('success', 'Jurusan berhasil diupdate!');
+
+        return redirect()->route('admin-major');
     }
 
     /**
