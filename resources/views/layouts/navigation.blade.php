@@ -156,8 +156,15 @@
                 </div>
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                @php
+                    use App\Models\Pengajuan;
+
+                    $jml = Pengajuan::where('nrp', Auth::user()->nik)
+                        ->where('status', '!=', 'Menunggu Persetujuan')
+                        ->count();
+                @endphp
                 <button type="button" data-dropdown-toggle="notification-dropdown"
-                    class="p-2 mr-1 text-cyan-200 rounded-lg hover:text-white hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-300">
+                    class="relative p-2 mr-1 text-cyan-200 rounded-lg hover:text-white hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-300">
                     <span class="sr-only">View notifications</span>
                     <!-- Bell icon -->
                     <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
@@ -166,8 +173,14 @@
                             d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z">
                         </path>
                     </svg>
+                    @if ($jml > 0)
+                        <span
+                            class="absolute top-1 right-1 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-600 rounded-full">
+                            {{ $jml }}
+                        </span>
+                    @endif
                 </button>
-                
+
 
                 <!-- Profile dropdown -->
                 <div class="relative ml-3">
@@ -179,8 +192,9 @@
                             <span class="sr-only">Open user menu</span>
                             {{-- <img class="size-8 rounded-full" src="{{ asset('profilePicture/' . Auth::user()->Image) }}"
                                 alt=""> --}}
-                            <img class="size-8 rounded-full" src="{{ asset('profilePicture/' . Auth::user()->image) }}" alt="">
-                            
+                            <img class="size-8 rounded-full" src="{{ asset('profilePicture/' . Auth::user()->image) }}"
+                                alt="">
+
                             <div class="flex flex-col items-start">
                                 <p class="text-sm text-white px-2">{{ Auth::user()->nama }}</p>
                                 {{-- <p class="text-sm text-white px-2">{{ Auth::user()->name }}</p> --}}
@@ -196,8 +210,8 @@
                         class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
                         role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                         <!-- Active: "bg-cyan-100 outline-none", Not Active: "" -->
-                        <a href="/profile" class="block px-4 py-2 text-sm text-cyan-700" role="menuitem"
-                            tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                        <a href="/profile" class="block px-4 py-2 text-sm text-cyan-700" role="menuitem" tabindex="-1"
+                            id="user-menu-item-0">Your Profile</a>
                         <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-cyan-700" role="menuitem"
                             tabindex="-1" id="user-menu-item-2">Sign out</a>
                     </div>
@@ -206,40 +220,47 @@
                 <!-- Notif Dropdown -->
                 <div class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white divide-y divide-cyan-100 shadow-lg rounded-xl"
                     id="notification-dropdown">
-                    <div
-                        class="block py-2 px-4 text-base font-medium text-center text-cyan-700 bg-cyan-50">
+                    <div class="block py-2 px-4 text-base font-medium text-center text-cyan-700 bg-cyan-50">
                         Notifications
                     </div>
-                    {{-- <div>
-                        @foreach ($pesan as $item)
-                            <a href="/Contact/contact"
+                    @php
+
+                        $notif = Pengajuan::where('nrp', Auth::user()->nik)
+                            ->where('status', '!=', 'Menunggu Persetujuan')
+                            ->latest('updated_at')
+                            ->take(5)
+                            ->get();
+                    @endphp
+                    <div>
+                        @foreach ($notif as $item)
+                            <a href="{{ route('mahasiswa-history') }}"
                                 class="flex py-3 px-4 border-b hover:bg-cyan-100">
                                 <div class="flex-shrink-0">
-                                    <img class="w-11 h-11 rounded-full"
-                                        src="{{ asset('profilePicture/defaultpp.jpg') }}" alt="Bonnie Green avatar" />
-                                    <div
-                                        class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 rounded-full border border-white bg-primary-700">
-                                        <svg aria-hidden="true" class="w-3 h-3 text-white" fill="currentColor"
-                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z">
-                                            </path>
-                                            <path
-                                                d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z">
-                                            </path>
-                                        </svg>
-                                    </div>
+                                    @if ($item->status == 'Selesai')
+                                        <img class="w-11 h-11 rounded-full"
+                                            src="{{ asset('profilePicture/' . $item->mo->image) }}"
+                                            alt="Bonnie Green avatar" />
+                                    @else
+                                        <img class="w-11 h-11 rounded-full"
+                                            src="{{ asset('profilePicture/' . $item->kaprodi->image) }}"
+                                            alt="Bonnie Green avatar" />
+                                    @endif
                                 </div>
                                 <div class="pl-3 w-full">
                                     <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400">
-                                        New Reply to your message </br>
-                                        <span class="font-semibold text-gray-900 dark:text-white">Subjek</span>:
-                                        {{ $item->Subjek }}
+                                        <span class="font-semibold text-gray-900 dark:text-white">Pengajuan
+                                            {{ $item->jenis_surat }} telah {{ $item->status }} </br></span>
+                                        @if ($item->status == 'Selesai')
+                                            {{ $item->mo->nama }}
+                                        @else
+                                            {{ $item->kaprodi->nama }}
+                                        @endif
                                     </div>
                                 </div>
                             </a>
                         @endforeach
-                    </div> --}}
+                    </div>
+
                     <a href="/Contact/contact"
                         class="block py-2 text-md font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-600 dark:text-white dark:hover:underline">
                         <div class="inline-flex items-center">

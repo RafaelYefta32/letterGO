@@ -28,19 +28,19 @@ class DashboardController extends Controller
                 ->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
                 })->count())
-                ->with('totalLetterMA', Pengajuan::where('status', 'Disetujui')->where('jenis_surat', 'Surat Keterangan Mahasiswa Aktif')
+                ->with('totalLetterMA', Pengajuan::whereIn('status', ['Disetujui', 'Selesai'])->where('jenis_surat', 'Surat Keterangan Mahasiswa Aktif')
                 ->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
                 })->count())
-                ->with('totalLetterKL', Pengajuan::where('status', 'Disetujui')->where('jenis_surat', 'Surat Keterangan Lulus')
+                ->with('totalLetterKL', Pengajuan::whereIn('status', ['Disetujui', 'Selesai'])->where('jenis_surat', 'Surat Keterangan Lulus')
                 ->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
                 })->count())
-                ->with('totalLetterTMK', Pengajuan::where('status', 'Disetujui')->where('jenis_surat', 'Surat Pengantar Tugas MK')
+                ->with('totalLetterTMK', Pengajuan::whereIn('status', ['Disetujui', 'Selesai'])->where('jenis_surat', 'Surat Pengantar Tugas MK')
                 ->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
                 })->count())
-                ->with('totalLetterHS', Pengajuan::where('status', 'Disetujui')->where('jenis_surat', 'Laporan Hasil Studi')
+                ->with('totalLetterHS', Pengajuan::whereIn('status', ['Disetujui', 'Selesai'])->where('jenis_surat', 'Laporan Hasil Studi')
                 ->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
                 })->count())

@@ -99,6 +99,13 @@
                                             placeholder="john.doe@email.com" required autocomplete="off" maxlength="45">
                                     </div>
                                     <div>
+                                        <label for="no_telepon"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Telepon</label>
+                                        <input type="text" name="no_telepon" id="no_telepon"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="+621234567890" required autocomplete="off" maxlength="15">
+                                    </div>
+                                    <div>
                                         <label for="alamat"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
                                         <input type="text" name="alamat" id="alamat"
@@ -287,6 +294,13 @@
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                             placeholder="john.doe@email.com" required autocomplete="off"
                                                             maxlength="45" value="{{ $user->email }}">
+                                                    </div>
+                                                    <div>
+                                                        <label for="no_telepon"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Telepon</label>
+                                                        <input type="text" name="no_telepon" id="no_telepon"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            placeholder="+621234567890" required autocomplete="off" maxlength="15" value="{{ $user->no_telepon }}">
                                                     </div>
                                                     <div>
                                                         <label for="alamat"

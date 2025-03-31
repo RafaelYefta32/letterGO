@@ -16,7 +16,7 @@
                             </svg>
                         </div>
                         <div>
-                            <h5 class="mb-1 text-base text-gray-500 dark:text-white">Menunggu</h5>
+                            <h5 class="mb-1 text-base text-gray-500 dark:text-white">Menunggu Persetujuan</h5>
                             <p class="font-bold text-gray-700 dark:text-gray-400">{{ $totalSuratMenunggu }}</p>
                         </div>
                     </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Jurusan;
+use File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -70,6 +72,7 @@ class UserController extends Controller
                 'nik' => 'required|string|max:7|unique:user,nik',
                 'nama' => 'required|string|max:100',
                 'email' => 'required|email|max:45|unique:user,email',
+                'no_telepon' => 'required|string|max:15|',
                 'alamat' => 'required|string|max:45|',
                 'id_role' => 'required|int',
                 'id_jurusan' => 'nullable|string',
@@ -93,6 +96,7 @@ class UserController extends Controller
                 'nik' => 'required|string|max:7|unique:user,nik',
                 'nama' => 'required|string|max:100',
                 'email' => 'required|email|max:45|unique:user,email',
+                'no_telepon' => 'required|string|max:15|',
                 'alamat' => 'required|string|max:45|',
                 'password' => 'required|confirmed',
                 'periode' => 'required|string|max:20|',
@@ -127,6 +131,7 @@ class UserController extends Controller
             }
 
             $image->move(public_path('profilePicture'), $imageName);
+            // Storage::disk('local')->put('/profilePicture/' . $imageName, File::get($image));
             return $imageName;
 
         } else {
@@ -161,6 +166,7 @@ class UserController extends Controller
             'nik' => ['required','string','max:7', Rule::unique('user','nik')->ignore($user->nik,'nik')],
             'nama' => 'required|string|max:100',
             'email' => ['required','email','max:45', Rule::unique('user','email')->ignore($user->email, 'email')],
+            'no_telepon' => 'required|string|max:15',
             'alamat' => 'required|string|max:45|',
             'id_role' => 'required|int',
             'id_jurusan' => 'nullable|string',
@@ -171,6 +177,7 @@ class UserController extends Controller
 
         $user['nama'] = $validateData['nama'];
         $user['email'] = $validateData['email'];
+        $user['no_telepon'] = $validateData['no_telepon'];
         $user['alamat'] = $validateData['alamat'];
         $user['password'] = Hash::make($validateData['password']);
         $user['periode'] = $validateData['periode'];
@@ -179,14 +186,16 @@ class UserController extends Controller
 
         $user->save();
 
-        if (Auth::user()->role->nama == 'Admin'){
+        // if (Auth::user()->role->nama == 'Admin'){
 
-            return redirect()->route('admin-user-crud')
-                ->with('success', 'User Berhasil diupdate');
-        } else if (Auth::user()->role->nama == 'Manager Operasional'){
-            return redirect()->route('mo-students')
-                ->with('success', 'User Berhasil diupdate');
-        }
+        //     return redirect()->route('admin-user-crud')
+        //         ->with('success', 'User Berhasil diupdate');
+        // } else if (Auth::user()->role->nama == 'Manager Operasional'){
+        //     return redirect()->route('mo-students')
+        //         ->with('success', 'User Berhasil diupdate');
+        // }
+        return redirect()->back()
+            ->with('success', 'Berhasil Mengupdate Profile');
 
         
     }

@@ -11,6 +11,12 @@ use App\Models\MataKuliah;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use File;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use App\Events\LetterUpdate;
+use Twilio\Rest\Client;
+use Exception;
 
 class LetterController extends Controller
 {
@@ -39,16 +45,46 @@ class LetterController extends Controller
                 ->with('laporanHS', LaporanHS::all());
         } else if (Auth::user()->role->nama == 'Kepala Program Studi'){
             
-            $submission = Pengajuan::all();
+            // $submission = Pengajuan::all();
+
+            $submit = Pengajuan::query();
+            if (request()->has('search')) {
+                $search = request('search');
+                $submit = $submit->where(function ($query) use ($search) {
+                    $query->where('jenis_surat', 'like', '%' . $search . '%')
+                          ->orWhere('nrp', 'like', '%' . $search . '%');
+                });
+            }
+
             return view('kaprodi.pengajuan')
-                ->with('submissions', $submission->filter(function ($item) {
-                    return $item->mahasiswa->id_jurusan == Auth::user()->id_jurusan;
-                }))
+                ->with('submissions', $submit->whereHas('mahasiswa', function ($query) {
+                    $query->where('id_jurusan', Auth::user()->id_jurusan);
+                })->get())
                 ->with('suratKL', SuratKL::all())
                 ->with('suratMA', SuratMA::all())
                 ->with('suratTMK', SuratTMK::all())
                 ->with('laporanHS', LaporanHS::all());
-        }
+        } else if (Auth::user()->role->nama == 'Manager Operasional'){
+            // dd(request()->search);
+            $submit = Pengajuan::query();
+            if (request()->has('search')) {
+                $search = request('search');
+                $submit = $submit->where(function ($query) use ($search) {
+                    $query->where('jenis_surat', 'like', '%' . $search . '%')
+                          ->orWhere('nrp', 'like', '%' . $search . '%');
+                });
+            }
+
+            return view('mo.letter')
+                ->with('submissions', $submit->whereIn('status', ['Disetujui', 'Selesai'])
+                    ->whereHas('mahasiswa', function ($query) {
+                        $query->where('id_jurusan', Auth::user()->id_jurusan);
+                    })->get())
+                ->with('suratKL', SuratKL::all())
+                ->with('suratMA', SuratMA::all())
+                ->with('suratTMK', SuratTMK::all())
+                ->with('laporanHS', LaporanHS::all());
+        } 
     }
 
     /**
@@ -74,7 +110,7 @@ class LetterController extends Controller
 
         $pengajuan = new Pengajuan($validateData);
         $pengajuan->status = "Menunggu Persetujuan";
-        $pengajuan->tanggal_pengajuan = now();
+        $pengajuan->tanggal_pengajuan = now()->timezone('Asia/Jakarta');
         $pengajuan->save();
 
         if($request->jenis_surat == "Surat Keterangan Mahasiswa Aktif"){
@@ -149,9 +185,69 @@ class LetterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SuratTMK $suratTMK)
+    public function update(Request $request, Pengajuan $pengajuan)
     {
         //
+        $pengajuan->status = $request->value;
+        $pengajuan->tanggal_persetujuan = now()->timezone('Asia/Jakarta');
+        $pengajuan->kaprodi_nik = Auth::user()->nik;
+        $pengajuan->save();
+
+        if($request->value == 'Disetujui'){
+
+            return redirect()->route('kaprodi-submissions')->with('success', 'Surat telah disetujui');
+        } else {
+            return redirect()->route('kaprodi-submissions')->with('reject', 'Surat telah ditolak');
+        }
+    }
+
+    public function uploadLetter(Request $request, Pengajuan $pengajuan){
+        $validateData = validator($request->all(),[
+            'title' => 'required|string|max:100',
+            'file_input' => 'sometimes|file|mimes:pdf,docx,doc|max:10240',
+        ])->validate();
+
+        $file = $validateData['file_input'];
+        $fileName = $validateData['title'] . '.' . $file->getClientOriginalExtension(); 
+
+        // Check if the file already exists
+        $filePath = storage_path('app/private/fileLetter') . '/' . $fileName;
+        if (file_exists($filePath)) {
+            unlink($filePath); // Delete the old image
+        } else {
+            Storage::disk('local')->put('/fileLetter/' . $fileName, File::get($file));
+        }
+
+        $pengajuan['file_surat'] = $fileName;
+        $pengajuan['status'] = 'Selesai';
+        $pengajuan['tanggal_upload'] = now();
+        $pengajuan['mo_nik'] = Auth::user()->nik;
+
+        $pengajuan->save();
+
+        $response = Http::withHeaders([
+            'Authorization' => 'BRtsKtwix3Ce5SP7kcCz',
+        ])->post('https://api.fonnte.com/send', [
+            'target' => $pengajuan->mahasiswa->no_telepon,
+            'message' => '*[LetterGO Notification]* Proses pengajuan ' . $pengajuan->jenis_surat . ' anda telah selesai, Surat tersedia untuk didownload di website.',
+        ]);
+
+        return redirect()->back()->with('success', 'File berhasil diupload');
+
+    }
+
+    public function downloadLetter($fileSurat){
+        $fileName = $fileSurat;
+        $filePath = Storage::disk('local')->path('fileLetter/' . $fileName);
+        $content = file_get_contents($filePath);
+
+        if (file_exists($filePath)) {
+            return response($content)->withHeaders([
+                'Content-Type' => mime_content_type($filePath),
+            ]);
+        } else {
+            return redirect()->back()->with('error', 'File tidak ditemukan');
+        }
     }
 
     /**
@@ -162,18 +258,4 @@ class LetterController extends Controller
         //
     }
 
-    public function accept(Pengajuan $pengajuan) {
-        $pengajuan->status = 'Disetujui';
-        $pengajuan->tanggal_persetujuan = now();
-        $pengajuan->kaprodi_nik = Auth::user()->nik;
-        $pengajuan->save();
-        return redirect()->route('kaprodi-submissions')->with('success', 'Surat telah disetujui');
-    }
-    
-    public function reject(Pengajuan $pengajuan) {
-        $pengajuan->status = 'Ditolak';
-        $pengajuan->kaprodi_nik = Auth::user()->nik;
-        $pengajuan->save();
-        return redirect()->route('kaprodi-submissions')->with('reject', 'Surat telah ditolak');
-    }
 }

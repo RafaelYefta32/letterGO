@@ -98,6 +98,13 @@
                                             placeholder="john.doe@email.com" required autocomplete="off" maxlength="45">
                                     </div>
                                     <div>
+                                        <label for="no_telepon"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Telepon</label>
+                                        <input type="text" name="no_telepon" id="no_telepon"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="+621234567890" required autocomplete="off" maxlength="15">
+                                    </div>
+                                    <div>
                                         <label for="alamat"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
                                         <input type="text" name="alamat" id="alamat"
@@ -284,6 +291,14 @@
                                                             maxlength="45" value="{{ $student->email }}">
                                                     </div>
                                                     <div>
+                                                        <label for="no_telepon"
+                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Telepon</label>
+                                                        <input type="text" name="no_telepon" id="no_telepon"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            placeholder="john.doe@email.com" required autocomplete="off"
+                                                            maxlength="15" value="{{ $student->no_telepon }}">
+                                                    </div>
+                                                    <div>
                                                         <label for="alamat"
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
                                                         <input type="text" name="alamat" id="alamat"
@@ -354,7 +369,7 @@
                                                             d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                                             clip-rule="evenodd"></path>
                                                     </svg>
-                                                    Add new user
+                                                    Edit user
                                                 </button>
                                             </form>
                                         </div>

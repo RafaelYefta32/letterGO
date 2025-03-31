@@ -293,22 +293,27 @@
                                             </dl>
                                             <div class="flex justify-between items-center">
                                                 @if ($submission->status != 'Disetujui' && $submission->status != 'Ditolak' && $submission->status != 'Selesai')
-                                                    <form action="{{ route('kaprodi-submissions-accept', [$submission->id]) }}" method="POST">
+                                                    <form
+                                                        action="{{ route('kaprodi-submissions-update', [$submission->id]) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('PUT')
+                                                        <input type="hidden" name="value" value="Disetujui">
                                                         <button type="submit"
-                                                        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Setuju</button>
+                                                            class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Setuju</button>
                                                     </form>
-                                                    
-                                                    <form action="{{ route('kaprodi-submissions-reject',[$submission->id])}}" method="POST">
+
+                                                    <form
+                                                        action="{{ route('kaprodi-submissions-update', [$submission->id]) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('PUT')
+                                                        <input type="hidden" name="value" value="Ditolak">
                                                         <button type="submit"
-                                                        class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
-                                                        Tolak
-                                                    </button>
+                                                            class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                                                            Tolak
+                                                        </button>
                                                     </form>
-                                                  
                                                 @else
                                                     <button type="button" disabled
                                                         class="focus:outline-none text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-400 dark:hover:bg-gray-500 dark:focus:ring-gray-700 opacity-50 cursor-not-allowed">Setuju</button>
@@ -347,7 +352,7 @@
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
                                         d=" M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414
-                                                                                                    1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                                                                        1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                                         clip-rule="evenodd" />
                                 </svg>
                             </a>

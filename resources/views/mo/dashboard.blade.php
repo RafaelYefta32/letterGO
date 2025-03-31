@@ -87,14 +87,12 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($latestLetterList as $letter)
-                                        
-                                    
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-3">{{ $loop->iteration }}</td>
-                                        <td class="px-6 py-3">{{ $letter->jenis_surat }}</td>
-                                        <td class="px-6 py-3">{{ $letter->mahasiswa->nama }}</td>
-                                        <td class="px-6 py-3">{{ $letter->tanggal_persetujuan }}</td>
-                                    </tr>
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <td class="px-6 py-3">{{ $loop->iteration }}</td>
+                                            <td class="px-6 py-3">{{ $letter->jenis_surat }}</td>
+                                            <td class="px-6 py-3">{{ $letter->mahasiswa->nama }}</td>
+                                            <td class="px-6 py-3">{{ $letter->tanggal_persetujuan }}</td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -117,16 +115,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($latestStudentList as $student )
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-3">{{ $loop->iteration }}</td>
-                                    <td class="px-6 py-3">{{ $student->nik }}</td>
-                                    <td class="px-6 py-3">{{ $student->nama }}</td>
-                                    <td class="px-6 py-3">{{ $student->created_at }}</td>
-                                </tr>
+                                @foreach ($latestStudentList as $student)
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-3">{{ $loop->iteration }}</td>
+                                        <td class="px-6 py-3">{{ $student->nik }}</td>
+                                        <td class="px-6 py-3">{{ $student->nama }}</td>
+                                        <td class="px-6 py-3">{{ $student->created_at }}</td>
+                                    </tr>
                                 @endforeach
-                                
-                                
+
+
                             </tbody>
                         </table>
                     </div>
@@ -155,13 +153,15 @@
             type: "pie",
             data: {
                 labels: [
-                    "Keterangan Aktif",
-                    "Pengantar Tugas",
-                    "Keterangan Lulus",
+                    "Surat Keterangan Mahasiswa Aktif",
+                    "Surat Pengantar Tugas",
+                    "Surat Keterangan Lulus",
                     "Laporan Hasil Studi",
                 ],
                 datasets: [{
-                    data: [{{ $totalLetterMA }}, {{ $totalLetterTMK }}, {{ $totalLetterKL }}, {{ $totalLetterHS }}],
+                    data: [{{ $totalLetterMA }}, {{ $totalLetterTMK }}, {{ $totalLetterKL }},
+                        {{ $totalLetterHS }}
+                    ],
                     backgroundColor: ["#2C7DA0", "#00A6A6", "#F4A259", "#8FC93A"],
                     borderWidth: 1,
                     borderColor: "#ffffff",
