@@ -14,7 +14,16 @@ class JurusanController extends Controller
      */
     public function index()
     {
-        return view('admin.major')->with('majors',Jurusan::all());
+        $submit = Jurusan::query();
+        if (request()->has('search')) {
+            $search = request('search');
+            $submit = $submit->where(function ($query) use ($search) {
+                $query->where('kode', 'like', '%' . $search . '%')
+                      ->orWhere('nama', 'like', '%' . $search . '%');
+            });
+        }
+
+        return view('admin.major')->with('majors',$submit->paginate(5));
     }
 
     /**

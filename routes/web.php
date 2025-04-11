@@ -66,8 +66,6 @@ Route::put('/student/crud/{student}', [UserController::class,'update'])->middlew
 
 Route::get('/letter', [LetterController::class, 'index'])->middleware(['auth', 'verified'])->name('mo-letter');
 
-Route::post('/letter', [LetterController::class, 'index'])->middleware(['auth', 'verified'])->name('mo-letter');
-
 Route::get('/course', [MataKuliahController::class,'index'])->middleware(['auth', 'verified'])->name('mo-course'); 
 
 Route::post('/course',[MataKuliahController::class,'store'])->middleware(['auth','verified'])->name('mo-course-store');

@@ -15,9 +15,18 @@ class MataKuliahController extends Controller
      */
     public function index()
     {
+        $courses = MataKuliah::query();
+
+        if (request()->has('search')) {
+            $search = request('search');
+            $courses = $courses->where(function ($query) use ($search) {
+                $query->where('kode', 'like', '%' . $search . '%')
+                        ->orWhere('nama', 'like', '%' . $search . '%');
+            });
+        }
+
         return view('mo.course')
-        ->with('courses', MataKuliah::all())
-        ->with('majors',Jurusan::all());
+        ->with('courses', $courses->where('id_jurusan', Auth::user()->id_jurusan)->paginate(5));
     }
 
     /**

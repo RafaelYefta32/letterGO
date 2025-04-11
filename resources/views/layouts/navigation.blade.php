@@ -192,7 +192,7 @@
                             <span class="sr-only">Open user menu</span>
                             {{-- <img class="size-8 rounded-full" src="{{ asset('profilePicture/' . Auth::user()->Image) }}"
                                 alt=""> --}}
-                            <img class="size-8 rounded-full" src="{{ asset('profilePicture/' . Auth::user()->image) }}"
+                            <img class="size-8 rounded-full" src="{{ asset('/storage/profilePicture/'.Auth::user()->image) }}"
                                 alt="">
 
                             <div class="flex flex-col items-start">
@@ -238,11 +238,11 @@
                                 <div class="flex-shrink-0">
                                     @if ($item->status == 'Selesai')
                                         <img class="w-11 h-11 rounded-full"
-                                            src="{{ asset('profilePicture/' . $item->mo->image) }}"
+                                            src="{{ asset('storage/profilePicture/' . $item->mo->image) }}"
                                             alt="Bonnie Green avatar" />
                                     @else
                                         <img class="w-11 h-11 rounded-full"
-                                            src="{{ asset('profilePicture/' . $item->kaprodi->image) }}"
+                                            src="{{ asset('storage/profilePicture/' . $item->kaprodi->image) }}"
                                             alt="Bonnie Green avatar" />
                                     @endif
                                 </div>

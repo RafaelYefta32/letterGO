@@ -24,17 +24,29 @@ class UserController extends Controller
             $search = request('search');
             $submit = $submit->where(function ($query) use ($search) {
                 $query->where('nama', 'like', '%' . $search . '%')
-                      ->orWhereHas('role', function ($query) use ($search) {
-                          $query->where('nama', 'like', '%' . $search . '%');
-                      })
+                      ->orWhere('nik', 'like', '%' . $search . '%')
                       ->orWhereHas('jurusan', function ($query) use ($search) {
                           $query->where('nama', 'like', '%' . $search . '%');
                       });
             });
+        } else if (request()->has('status')){
+            $search = request('status');
+            if ($search != "All"){
+                $submit = $submit->where(function ($query) use ($search) {
+                    $query->where('status', 'like', '%' . $search . '%');
+                });
+            }
+        } else if (request()->has('role')){
+            $search = request('role');
+            if ($search != "All"){
+                $submit = $submit->where(function ($query) use ($search) {
+                    $query->where('id_role', 'like', '%' . $search . '%');
+                });
+            }
         }
 
         return view('admin.user')
-        ->with('users', $submit->get())
+        ->with('users', $submit->paginate(5))
         ->with('roles',Role::all())
         ->with('majors',Jurusan::all());
     }
@@ -47,10 +59,17 @@ class UserController extends Controller
                 $query->where('nama', 'like', '%' . $search . '%')
                       ->orWhere('email', 'like', '%' . $search . '%');
             });
+        } else if (request()->has('status')){
+            $search = request('status');
+            if ($search != "All"){
+                $submit = $submit->where(function ($query) use ($search) {
+                    $query->where('status', 'like', '%' . $search . '%');
+                });
+            }
         }
 
         return view('mo.students')
-        ->with('students', $submit->where('id_role', 4)->where('id_jurusan', Auth::user()->id_jurusan)->get());
+        ->with('students', $submit->where('id_role', 4)->where('id_jurusan', Auth::user()->id_jurusan)->paginate(5));
 
     }
 
@@ -72,18 +91,35 @@ class UserController extends Controller
                 'nik' => 'required|string|max:7|unique:user,nik',
                 'nama' => 'required|string|max:100',
                 'email' => 'required|email|max:45|unique:user,email',
-                'no_telepon' => 'required|string|max:15|',
                 'alamat' => 'required|string|max:45|',
                 'id_role' => 'required|int',
                 'id_jurusan' => 'nullable|string',
                 'password' => 'required|confirmed',
                 'periode' => 'required|string|max:20|',
+                'status' => 'required|string|max:20|',
                 'file_input' => 'nullable|image|mimes:svg,png,jpg,gif,jpeg',
             ])->validate();
+            
+            
+            if(($validateData['id_role'] == 3 || $validateData['id_role'] == 2) && $validateData['status'] == 'Aktif'){
+                $kpr = User::where('id_jurusan', $validateData['id_jurusan'])
+                       ->where('status', 'Aktif')
+                       ->where('id_role', $validateData['id_role']);
+                if($kpr->exists()){
+                    return back()->withErrors('Tidak Dapat Menambahkan User Baru.');
+                }
+            }
 
             $user =  new User($validateData);
 
-            $user->image = $this->uploadImage($validateData);
+            if ($request->hasFile('file_input')) {
+                $file = $request->file('file_input');
+                $newFileName = $validateData['nik'] . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('profilePicture', $newFileName, 'public');
+                $user['image'] = $newFileName;
+            } else {
+                $user['image'] = 'defaultpp.jpg';
+            }
 
             $user->save();
 
@@ -96,17 +132,24 @@ class UserController extends Controller
                 'nik' => 'required|string|max:7|unique:user,nik',
                 'nama' => 'required|string|max:100',
                 'email' => 'required|email|max:45|unique:user,email',
-                'no_telepon' => 'required|string|max:15|',
                 'alamat' => 'required|string|max:45|',
                 'password' => 'required|confirmed',
                 'periode' => 'required|string|max:20|',
+                'status' => 'required|string|max:20|',
                 'file_input' => 'sometimes|image|mimes:svg,png,jpg,gif,jpeg',
             ])->validate();
 
             $user =  new User($validateData);
             $user->id_role = 4;
 
-            $user->image = $this->uploadImage($validateData);
+            if ($request->hasFile('file_input')) {
+                $file = $request->file('file_input');
+                $newFileName = $validateData['nik'] . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('profilePicture', $newFileName, 'public');
+                $user['image'] = $newFileName;
+            } else {
+                $user['image'] = 'defaultpp.jpg';
+            }
 
             $user->id_jurusan = Auth::user()->id_jurusan;
            
@@ -117,26 +160,6 @@ class UserController extends Controller
             return redirect()->route('mo-students');
         }
            
-    }
-
-    private function uploadImage($validateData) {
-        if (isset($validateData['file_input'])) {
-            $image = $validateData['file_input'];
-            $imageName = $validateData['nik'] . '.' . $image->getClientOriginalExtension(); 
-
-            // Check if the image already exists
-            $imagePath = public_path('profilePicture') . '/' . $imageName;
-            if (file_exists($imagePath)) {
-                unlink($imagePath); // Delete the old image
-            }
-
-            $image->move(public_path('profilePicture'), $imageName);
-            // Storage::disk('local')->put('/profilePicture/' . $imageName, File::get($image));
-            return $imageName;
-
-        } else {
-            return 'defaultpp.jpg';
-        }
     }
 
     /**
@@ -160,43 +183,50 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
 
         $validateData = validator($request->all(),[
             'nik' => ['required','string','max:7', Rule::unique('user','nik')->ignore($user->nik,'nik')],
             'nama' => 'required|string|max:100',
             'email' => ['required','email','max:45', Rule::unique('user','email')->ignore($user->email, 'email')],
-            'no_telepon' => 'required|string|max:15',
             'alamat' => 'required|string|max:45|',
             'id_role' => 'required|int',
             'id_jurusan' => 'nullable|string',
             'password' => 'sometimes|confirmed',
             'periode' => 'sometimes|string|max:20|',
-            'file_input' => 'nullable|image|mimes:svg,png,jpg,gif,jpeg',
+            'status' => 'required|string|max:20|',
+            'file_input' => 'nullable|image|mimes:png,jpg,jpeg',
         ])->validate();
+
+        if(($validateData['id_role'] == 3 || $validateData['id_role'] == 2) && $validateData['status'] == 'Aktif'){
+            $kpr = User::where('id_jurusan', $validateData['id_jurusan'])
+                   ->where('status', 'Aktif')
+                   ->where('id_role', $validateData['id_role'])
+                   ->where('nik', '!=', $validateData['nik']);
+            if($kpr->exists()){
+                return back()->withErrors('Tidak Dapat Menambahkan User Baru.');
+            }
+        }
 
         $user['nama'] = $validateData['nama'];
         $user['email'] = $validateData['email'];
-        $user['no_telepon'] = $validateData['no_telepon'];
         $user['alamat'] = $validateData['alamat'];
         $user['password'] = Hash::make($validateData['password']);
         $user['periode'] = $validateData['periode'];
+        $user['status'] = $validateData['status'];
 
-        $user->image = $this->uploadImage($validateData);
+        if ($request->hasFile('file_input')) {
+            $file = $request->file('file_input');
+            $newFileName = $validateData['nik'] . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('profilePicture', $newFileName, 'public');
+            $user['image'] = $newFileName;
+        } else {
+            $user['image'] = 'defaultpp.jpg';
+        }
 
         $user->save();
 
-        // if (Auth::user()->role->nama == 'Admin'){
-
-        //     return redirect()->route('admin-user-crud')
-        //         ->with('success', 'User Berhasil diupdate');
-        // } else if (Auth::user()->role->nama == 'Manager Operasional'){
-        //     return redirect()->route('mo-students')
-        //         ->with('success', 'User Berhasil diupdate');
-        // }
         return redirect()->back()
             ->with('success', 'Berhasil Mengupdate Profile');
-
         
     }
 

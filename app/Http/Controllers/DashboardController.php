@@ -28,24 +28,23 @@ class DashboardController extends Controller
                 ->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
                 })->count())
-                ->with('totalLetterMA', Pengajuan::whereIn('status', ['Disetujui', 'Selesai'])->where('jenis_surat', 'Surat Keterangan Mahasiswa Aktif')
+                ->with('totalLetterMA', Pengajuan::where('jenis_surat', 'Surat Keterangan Mahasiswa Aktif')
                 ->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
                 })->count())
-                ->with('totalLetterKL', Pengajuan::whereIn('status', ['Disetujui', 'Selesai'])->where('jenis_surat', 'Surat Keterangan Lulus')
+                ->with('totalLetterKL', Pengajuan::where('jenis_surat', 'Surat Keterangan Lulus')
                 ->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
                 })->count())
-                ->with('totalLetterTMK', Pengajuan::whereIn('status', ['Disetujui', 'Selesai'])->where('jenis_surat', 'Surat Pengantar Tugas MK')
+                ->with('totalLetterTMK', Pengajuan::where('jenis_surat', 'Surat Pengantar Tugas MK')
                 ->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
                 })->count())
-                ->with('totalLetterHS', Pengajuan::whereIn('status', ['Disetujui', 'Selesai'])->where('jenis_surat', 'Laporan Hasil Studi')
+                ->with('totalLetterHS', Pengajuan::where('jenis_surat', 'Laporan Hasil Studi')
                 ->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
                 })->count())
-                ->with('latestLetterList', Pengajuan::where('status', 'Disetujui')
-                    ->whereHas('mahasiswa', function ($query) {
+                ->with('latestLetterList', Pengajuan::whereHas('mahasiswa', function ($query) {
                         $query->where('id_jurusan', Auth::user()->id_jurusan);
                     })->latest('tanggal_persetujuan')->take(5)->get())
                 ->with('latestStudentList', User::where('id_jurusan', Auth::user()->id_jurusan)->latest()->take(5)->get());

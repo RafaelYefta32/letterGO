@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Events\LetterUpdate;
 use Twilio\Rest\Client;
 use Exception;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LetterMail;
 
 class LetterController extends Controller
 {
@@ -35,10 +37,17 @@ class LetterController extends Controller
                     $query->where('jenis_surat', 'like', '%' . $search . '%')
                           ->orWhere('status', 'like', '%' . $search . '%');
                 });
+            } else if (request()->has('status')){
+                $search = request('status');
+                if($search != "All"){
+                    $submit = $submit->where(function ($query) use ($search) {
+                        $query->where('status', 'like', '%' . $search . '%');
+                    });
+                }
             }
     
             return view('mahasiswa.history')
-                ->with('submits', $submit->where('nrp', Auth::user()->nik)->get())
+                ->with('submits', $submit->where('nrp', Auth::user()->nik)->paginate(5))
                 ->with('suratKL', SuratKL::all())
                 ->with('suratMA', SuratMA::all())
                 ->with('suratTMK', SuratTMK::all())
@@ -54,12 +63,19 @@ class LetterController extends Controller
                     $query->where('jenis_surat', 'like', '%' . $search . '%')
                           ->orWhere('nrp', 'like', '%' . $search . '%');
                 });
+            } else if (request()->has('status')){
+                $search = request('status');
+                if($search != "All"){
+                    $submit = $submit->where(function ($query) use ($search) {
+                        $query->where('status', 'like', '%' . $search . '%');
+                    });
+                }
             }
 
             return view('kaprodi.pengajuan')
                 ->with('submissions', $submit->whereHas('mahasiswa', function ($query) {
                     $query->where('id_jurusan', Auth::user()->id_jurusan);
-                })->get())
+                })->paginate(5))
                 ->with('suratKL', SuratKL::all())
                 ->with('suratMA', SuratMA::all())
                 ->with('suratTMK', SuratTMK::all())
@@ -73,13 +89,20 @@ class LetterController extends Controller
                     $query->where('jenis_surat', 'like', '%' . $search . '%')
                           ->orWhere('nrp', 'like', '%' . $search . '%');
                 });
+            } else if (request()->has('status')){
+                $search = request('status');
+                if($search != "All"){
+                    $submit = $submit->where(function ($query) use ($search) {
+                        $query->where('status', 'like', '%' . $search . '%');
+                    });
+                }
             }
 
+
             return view('mo.letter')
-                ->with('submissions', $submit->whereIn('status', ['Disetujui', 'Selesai'])
-                    ->whereHas('mahasiswa', function ($query) {
+                ->with('submissions', $submit->whereHas('mahasiswa', function ($query) {
                         $query->where('id_jurusan', Auth::user()->id_jurusan);
-                    })->get())
+                    })->paginate(5))
                 ->with('suratKL', SuratKL::all())
                 ->with('suratMA', SuratMA::all())
                 ->with('suratTMK', SuratTMK::all())
@@ -215,22 +238,18 @@ class LetterController extends Controller
         if (file_exists($filePath)) {
             unlink($filePath); // Delete the old image
         } else {
-            Storage::disk('local')->put('/fileLetter/' . $fileName, File::get($file));
+            $file->storeAs('fileLetter', $fileName);
         }
 
         $pengajuan['file_surat'] = $fileName;
         $pengajuan['status'] = 'Selesai';
-        $pengajuan['tanggal_upload'] = now();
+        $pengajuan['tanggal_upload'] = now()->timezone('Asia/Jakarta');
         $pengajuan['mo_nik'] = Auth::user()->nik;
 
         $pengajuan->save();
 
-        $response = Http::withHeaders([
-            'Authorization' => 'BRtsKtwix3Ce5SP7kcCz',
-        ])->post('https://api.fonnte.com/send', [
-            'target' => $pengajuan->mahasiswa->no_telepon,
-            'message' => '*[LetterGO Notification]* Proses pengajuan ' . $pengajuan->jenis_surat . ' anda telah selesai, Surat tersedia untuk didownload di website.',
-        ]);
+        // Kirim Notifikasi via Gmail
+        Mail::to($pengajuan->mahasiswa->email)->send(new LetterMail($pengajuan));
 
         return redirect()->back()->with('success', 'File berhasil diupload');
 

@@ -9,7 +9,7 @@
                         <div class="col-md-3 border-right">
                             <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
                                     class="rounded-circle mt-5" width="150px"
-                                    src="{{ asset('profilePicture/' . Auth::user()->image) }}"><span
+                                    src="{{ asset('storage/profilePicture/' . Auth::user()->image) }}"><span
                                     class="font-weight-bold">{{ Auth::user()->nama }}</span>
                                 @if (Auth::user()->role->nama == 'Admin')
                                     <span class="text-black-50">{{ Auth::user()->role->nama }}</span>
@@ -52,15 +52,6 @@
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="" autocomplete="off" maxlength="45"
                                                 value="{{ Auth::user()->email }}" required />
-                                        </div>
-                                        <div class="mb-2">
-                                            <label for="no_telepon"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No
-                                                Telepon</label>
-                                            <input type="text" id="no_telepon" name="no_telepon"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="" autocomplete="off" maxlength="15"
-                                                value="{{ Auth::user()->no_telepon }}" required />
                                         </div>
                                         <div class="mb-2">
                                             <label for="alamat"
