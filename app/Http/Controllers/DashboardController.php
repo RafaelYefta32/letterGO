@@ -47,7 +47,7 @@ class DashboardController extends Controller
                 ->with('latestLetterList', Pengajuan::whereHas('mahasiswa', function ($query) {
                         $query->where('id_jurusan', Auth::user()->id_jurusan);
                     })->latest('tanggal_persetujuan')->take(5)->get())
-                ->with('latestStudentList', User::where('id_jurusan', Auth::user()->id_jurusan)->latest()->take(5)->get());
+                ->with('latestStudentList', User::where('id_jurusan', Auth::user()->id_jurusan)->where('id_role', 4)->latest()->take(5)->get());
     }
 
     public function indexKaprodi() {
