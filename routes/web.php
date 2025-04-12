@@ -28,10 +28,6 @@ Route::middleware('auth')->group(function () {
         }
     });
 
-    Route::get('/my-profile', function () {
-        return view('profile.profile');
-    })->name('my-profile');
-
     Route::middleware(['role:1'])->group(function () {
         // ADMIN ROUTE
         Route::get('/admin/dashboard', [DashboardController::class, 'indexAdmin'])->name('admin-dashboard');
@@ -41,6 +37,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/major', [JurusanController::class, 'index'])->name('admin-major');
         Route::post('/major', [JurusanController::class, 'store'])->name('admin-major-store');
         Route::put('/major/{jurusan}', [JurusanController::class, 'update'])->name('admin-major-update');
+        Route::get('/admin/course', [MataKuliahController::class, 'index'])->name('admin-course');
+        Route::post('/admin/course', [MataKuliahController::class, 'store'])->name('admin-course-store');
+        Route::put('/admin/course/{mataKuliah}', [MataKuliahController::class, 'update'])->name('admin-course-update');
     });
 
     Route::middleware(['role:2'])->group(function () {
@@ -69,15 +68,31 @@ Route::middleware('auth')->group(function () {
             return view('mahasiswa.home');
         })->name('home');
         Route::get('/submit', [LetterController::class, 'create'])->name('mahasiswa-submit');
+        Route::delete('/submit/cancel/{pengajuan}', [LetterController::class, 'destroy'])->name('mahasiswa-cancel');
         Route::get('/history', [LetterController::class, 'index'])->name('mahasiswa-history');
         Route::post('/history', [LetterController::class, 'index'])->name('mahasiswa-history');
         Route::get('/profile', function () {
             return view('mahasiswa.profile');
         })->name('mahasiswa-profile');
         Route::post('/submit', [LetterController::class, 'store'])->name('mahasiswa-store');
-        Route::put('/profile/{user}', [UserController::class, 'update'])->name('profile-user-update');
-        Route::get('/history/{fileSurat}', [LetterController::class, 'downloadLetter'])->name('mahasiswa-download-letter');
     });
+    
+    Route::middleware(['role:2,3,4'])->group(function () {
+        // COMMON ROUTE
+        Route::get('/download/{fileSurat}', [LetterController::class, 'downloadLetter'])->name('download-letter');
+    });
+
+    Route::middleware(['role:1,2,3,4'])->group(function () {
+        // COMMON ROUTE
+        Route::put('/profile/{user}', [UserController::class, 'update'])->name('profile-user-update');
+    });
+    Route::middleware(['role:1,2,3'])->group(function () {
+        // COMMON ROUTE
+        Route::get('/my-profile', function () {
+            return view('profile.profile');
+        })->name('my-profile');
+    });
+    
 
 });
 

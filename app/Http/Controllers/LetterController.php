@@ -96,10 +96,8 @@ class LetterController extends Controller
                         $query->where('status', 'like', '%' . $search . '%');
                     });
                 }
-            }
 
-
-            return view('mo.letter')
+                return view('mo.letter')
                 ->with('submissions', $submit->whereHas('mahasiswa', function ($query) {
                         $query->where('id_jurusan', Auth::user()->id_jurusan);
                     })->paginate(5))
@@ -107,6 +105,18 @@ class LetterController extends Controller
                 ->with('suratMA', SuratMA::all())
                 ->with('suratTMK', SuratTMK::all())
                 ->with('laporanHS', LaporanHS::all());
+                
+            } else {
+                return view('mo.letter')
+                ->with('submissions', $submit->whereHas('mahasiswa', function ($query) {
+                        $query->where('id_jurusan', Auth::user()->id_jurusan);
+                    })->Where('status', 'Disetujui')->paginate(5))
+                ->with('suratKL', SuratKL::all())
+                ->with('suratMA', SuratMA::all())
+                ->with('suratTMK', SuratTMK::all())
+                ->with('laporanHS', LaporanHS::all());
+            }
+
         } 
     }
 
@@ -272,9 +282,24 @@ class LetterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SuratTMK $suratTMK)
+    public function destroy(Pengajuan $pengajuan)
     {
-        //
+        // dd($pengajuan->jenis_surat);
+        if ($pengajuan->jenis_surat == "Surat Keterangan Mahasiswa Aktif"){
+            $surat = SuratMA::where('id_pengajuan', $pengajuan->id)->first();
+            $surat->delete();
+        } else if ($pengajuan->jenis_surat == "Surat Keterangan Lulus"){
+            $surat = SuratKL::where('id_pengajuan', $pengajuan->id)->first();
+            $surat->delete();
+        } else if ($pengajuan->jenis_surat == "Surat Pengantar Tugas MK"){
+            $surat = SuratTMK::where('id_pengajuan', $pengajuan->id)->first();
+            $surat->delete();
+        } else if ($pengajuan->jenis_surat == "Laporan Hasil Studi"){
+            $surat = LaporanHS::where('id_pengajuan', $pengajuan->id)->first();
+            $surat->delete();
+        }
+        $pengajuan->delete();
+        return redirect(route('mahasiswa-history'))->with('success', 'Pengajuan berhasil dibatalkan');
     }
 
 }

@@ -86,6 +86,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {    
+
         if (Auth::user()->role->nama == 'Admin') {
             $validateData = validator($request->all(),[
                 'nik' => 'required|string|max:7|unique:user,nik',
@@ -97,7 +98,7 @@ class UserController extends Controller
                 'password' => 'required|confirmed',
                 'periode' => 'required|string|max:20|',
                 'status' => 'required|string|max:20|',
-                'file_input' => 'nullable|image|mimes:svg,png,jpg,gif,jpeg',
+                'file_input' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
             ])->validate();
             
             
@@ -127,7 +128,7 @@ class UserController extends Controller
 
             return redirect()->route('admin-user-crud');
 
-        } elseif (Auth::user()->role->nama == 'Manager Operasional') {
+        } else if (Auth::user()->role->nama == 'Manager Operasional') {
             $validateData = validator($request->all(),[
                 'nik' => 'required|string|max:7|unique:user,nik',
                 'nama' => 'required|string|max:100',
@@ -136,7 +137,7 @@ class UserController extends Controller
                 'password' => 'required|confirmed',
                 'periode' => 'required|string|max:20|',
                 'status' => 'required|string|max:20|',
-                'file_input' => 'sometimes|image|mimes:svg,png,jpg,gif,jpeg',
+                'file_input' => 'sometimes|image|mimes:png,jpg,jpeg|max:2048',
             ])->validate();
 
             $user =  new User($validateData);
@@ -194,7 +195,7 @@ class UserController extends Controller
             'password' => 'sometimes|confirmed',
             'periode' => 'sometimes|string|max:20|',
             'status' => 'required|string|max:20|',
-            'file_input' => 'nullable|image|mimes:png,jpg,jpeg',
+            'file_input' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ])->validate();
 
         if(($validateData['id_role'] == 3 || $validateData['id_role'] == 2) && $validateData['status'] == 'Aktif'){

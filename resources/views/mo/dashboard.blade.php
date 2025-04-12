@@ -57,8 +57,6 @@
                     </div>
                 </div>
 
-
-
                 <div class="grid grid-cols-1 lg:grid-cols-[auto,2fr] gap-6 items-start">
                     <!-- Diagram Pie Chart -->
                     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full min-w-[350px] h-auto">
@@ -99,7 +97,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Tabel Daftar Pengguna Terbaru -->
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md min-w-[400px] h-auto mt-4">

@@ -19,7 +19,7 @@ class WebRole
         if (Auth::user() != null && in_array(Auth::user()->id_role, $roles) && Auth::user()->status == 'Aktif'){
             return $next($request);
         }
-        return abort(403, 'You are not authorized.');
+        return abort(403, 'You cannot visit the page.');
 
     }
 }

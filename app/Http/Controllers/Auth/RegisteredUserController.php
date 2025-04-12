@@ -29,22 +29,37 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $validateData = validator($request->all(),[
+            'nik' => 'required|string|max:7|unique:user,nik',
+            'nama' => 'required|string|max:100',
+            'email' => 'required|email|max:45|unique:user,email',
+            'alamat' => 'required|string|max:45|',
+            'periode' => 'required|string|max:20|',
+            'file_input' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+            'password' => 'required|confirmed',
+        ])->validate();
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $user =  new User($validateData);
+        
+        if ($request->hasFile('file_input')) {
+            $file = $request->file('file_input');
+            $newFileName = $validateData['nik'] . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('profilePicture', $newFileName, 'public');
+            $user['image'] = $newFileName;
+        } else {
+            $user['image'] = 'defaultpp.jpg';
+        }
+
+        $user['id_role'] = 1;
+        $user['id_jurusan'] = null;
+        $user['status'] = 'Aktif';
+
+        $user->save();
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('admin-dashboard', absolute: false));
     }
 }

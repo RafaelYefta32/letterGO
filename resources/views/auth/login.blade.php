@@ -4,11 +4,6 @@
 
     <section class="bg-gray-50">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            {{-- <a href="#" class="flex items-center mb-6 text-3xl font-semibold text-gray-900">
-                <img class="h-16 w-16" src="{{ asset('img/logoLetter.png') }}"
-                    alt="logo">
-                LetterGo
-            </a> --}}
             <span>
                 <div class="flex items-center justify-center">
                     <img class="w-24 h-auto md:w-36 lg:w-32" src="{{ asset('img/logoLetter.png') }}"

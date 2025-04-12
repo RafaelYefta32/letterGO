@@ -25,8 +25,29 @@ class MataKuliahController extends Controller
             });
         }
 
-        return view('mo.course')
-        ->with('courses', $courses->where('id_jurusan', Auth::user()->id_jurusan)->paginate(5));
+        if(Auth::user()->id_role == 1){
+            if(request()->has('jurusan')){
+                $search = request('jurusan');
+                if($search != 'All'){
+                    $courses = $courses->where(function ($query) use ($search) {
+                               $query->where('id_jurusan', 'like', '%' . $search . '%');
+                    });
+                }
+            }
+
+            $majors = Jurusan::all();
+
+            return view('admin.course')
+            ->with('courses', $courses->paginate(5))
+            ->with('majors', $majors);
+
+        } else {
+
+            return view('mo.course')
+            ->with('courses', $courses->where('id_jurusan', Auth::user()->id_jurusan)->paginate(5));
+        }
+
+
     }
 
     /**
@@ -42,19 +63,36 @@ class MataKuliahController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = validator($request->all(),[
-            'kode' => 'required|string|max:12|unique:mata_kuliah,kode',
-            'nama' => 'required|string|max:100|unique:mata_kuliah,nama',
-            'sks' => 'required|int|min:1',
-        ])->validate();
+        if(Auth::user()->id_role == 1){
+            $validateData = validator($request->all(),[
+                'kode' => 'required|string|max:12|unique:mata_kuliah,kode',
+                'nama' => 'required|string|max:100|unique:mata_kuliah,nama',
+                'sks' => 'required|int|min:1',
+                'id_jurusan' => 'required|int|min:1',
+            ])->validate();
+    
+            $mata_kuliah = new MataKuliah($validateData);
+            $mata_kuliah->save();
+    
+            session()->flash('success', 'Mata Kuliah berhasil ditambahkan');
+    
+            return redirect()->route('admin-course');
+        } else {
 
-        $mata_kuliah = new MataKuliah($validateData);
-        $mata_kuliah->id_jurusan = Auth::user()->id_jurusan;
-        $mata_kuliah->save();
-
-        session()->flash('success', 'Mata Kuliah berhasil ditambahkan');
-
-        return redirect()->route('mo-course');
+            $validateData = validator($request->all(),[
+                'kode' => 'required|string|max:12|unique:mata_kuliah,kode',
+                'nama' => 'required|string|max:100|unique:mata_kuliah,nama',
+                'sks' => 'required|int|min:1',
+            ])->validate();
+    
+            $mata_kuliah = new MataKuliah($validateData);
+            $mata_kuliah->id_jurusan = Auth::user()->id_jurusan;
+            $mata_kuliah->save();
+    
+            session()->flash('success', 'Mata Kuliah berhasil ditambahkan');
+    
+            return redirect()->route('mo-course');
+        }
     }
 
     /**

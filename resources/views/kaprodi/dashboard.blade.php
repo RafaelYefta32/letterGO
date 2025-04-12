@@ -21,8 +21,6 @@
                         </div>
                     </div>
 
-
-
                     <!-- Card 2 (Surat Disetujui) -->
                     <div
                         class="border border-gray-300 rounded-lg shadow-md h-28 flex items-center p-6 bg-white dark:bg-gray-800">
@@ -32,14 +30,13 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-
-
                         </div>
                         <div>
                             <h5 class="mb-1 text-base text-gray-500 dark:text-white">Disetujui</h5>
                             <p class="font-bold text-gray-700 dark:text-gray-400">{{ $totalSuratDisetujui }}</p>
                         </div>
                     </div>
+
                     <!-- Card 3 (Surat Siap Upload) -->
                     <div
                         class="border border-gray-300 rounded-lg shadow-md h-28 flex items-center p-6 bg-white dark:bg-gray-800">
@@ -49,8 +46,6 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-
-
                         </div>
                         <div>
                             <h5 class="mb-1 text-base text-gray-500 dark:text-white">Ditolak</h5>
@@ -113,15 +108,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-            </div>
-
         </section>
     </main>
 
