@@ -37,7 +37,7 @@
                             <form class="flex items-center w-full space-x-3 md:w-auto">
                                 <select name="jurusan" onchange="this.form.submit()"
                                     class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-300 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-600 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600">
-                                    <option value="" disabled selected>Role</option>
+                                    <option value="" disabled selected>Jurusan</option>
                                     <option value="All">All</option>
                                     @foreach ($majors as $major)
                                         <option value="{{ $major->kode }}">{{ $major->nama }}</option>
@@ -52,7 +52,7 @@
                                     <path clip-rule="evenodd" fill-rule="evenodd"
                                         d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                 </svg>
-                                Add Student
+                                Add Course
                             </button>
                         </div>
                     </div>
