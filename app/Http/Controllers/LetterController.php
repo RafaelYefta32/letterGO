@@ -53,8 +53,6 @@ class LetterController extends Controller
                 ->with('suratTMK', SuratTMK::all())
                 ->with('laporanHS', LaporanHS::all());
         } else if (Auth::user()->role->nama == 'Kepala Program Studi'){
-            
-            // $submission = Pengajuan::all();
 
             $submit = Pengajuan::query();
             if (request()->has('search')) {

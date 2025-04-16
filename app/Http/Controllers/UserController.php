@@ -204,7 +204,7 @@ class UserController extends Controller
                    ->where('id_role', $validateData['id_role'])
                    ->where('nik', '!=', $validateData['nik']);
             if($kpr->exists()){
-                return back()->withErrors('Tidak Dapat Menambahkan User Baru.');
+                return back()->withErrors('Tidak Dapat Mengupdate Data User.');
             }
         }
 

@@ -140,7 +140,7 @@
                                             class="flex py-3 px-4 border-b hover:bg-cyan-100">
                                             <div class="flex-shrink-0">
                                                 <img class="w-11 h-11 rounded-full"
-                                                    src="{{ asset('profilePicture/' . $item->mahasiswa->image) }}"
+                                                    src="{{ asset('storage/profilePicture/' . $item->mahasiswa->image) }}"
                                                     alt="Bonnie Green avatar" />
                                             </div>
                                             <div class="pl-3 w-full">
@@ -157,7 +157,7 @@
                                             class="flex py-3 px-4 border-b hover:bg-cyan-100">
                                             <div class="flex-shrink-0">
                                                 <img class="w-11 h-11 rounded-full"
-                                                    src="{{ asset('profilePicture/' . $item->mahasiswa->image) }}"
+                                                    src="{{ asset('storage/profilePicture/' . $item->mahasiswa->image) }}"
                                                     alt="Bonnie Green avatar" />
                                             </div>
                                             <div class="pl-3 w-full">

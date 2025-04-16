@@ -93,7 +93,7 @@
                                     <td class="px-4 py-3 flex items-center justify-start">
                                         @if ($submission->status != 'Selesai' && $submission->status != 'Ditolak')
                                             <button type="button"
-                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                                class="flex items-center justify-center text-white bg-cyan-800 hover:bg-cyan-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2.5 me-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                                                 data-modal-target="upload{{ $submission->id }}"
                                                 data-modal-toggle="upload{{ $submission->id }}">Upload</button>
                                         @else
